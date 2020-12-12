@@ -1,0 +1,24 @@
+{
+  "name": "ReactStudy",
+  "version": "1.0.0",
+  "description": "React Study Demo",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://AiguangLi@github.com/AiguangLi/React.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AiguangLi/React/issues"
+  },
+  "homepage": "https://github.com/AiguangLi/React#readme",
+  "devDependencies": {
+    "webpack": "^5.10.1",
+    "webpack-cli": "^4.2.0"
+  }
+}
