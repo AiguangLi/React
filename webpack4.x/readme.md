@@ -70,5 +70,23 @@ npm i webpack-dev-server -D
 npm i webpack-dev-server -g (全局安装用这个命令)
 ```
 
-此时在package.json会增加devDependencies的一个依赖，即`webpack-dev-server`。
+此时在package.json会增加devDependencies的一个依赖，即`webpack-dev-server`，需要在package.json中的scripts增加dev属性，指向webpack-dev-server(见最终的package.json)。
 之后就可以使用`npm run dev`运行项目并在更改后实时打包(当前验证5.x版本不支持webpack-dev-server)。
+监听模式下会在内存中生成一个main.js文件(需要修改index.html的js执行目录为/main.js)，从而减少了从磁盘访问造成调试时间加长。
+
+## 问题
+
+* 5.x版本的webpack-dev-server不兼容的问题，将版本降为4.x版本，这里以4.43.0为例，命令如下：
+
+```shell
+npm i webpack@4.43.0 -D
+npm i webpack@4.43.0 -g (全局安装用这个命令)
+```
+
+* 运行npm run dev提示错误：`Error: Cannot find module 'webpack-cli/bin/config-yargs'`
+原因是webpack-cli与web-dev-server版本不兼容导致，将webpack-cli版本降级即可（原先是4.2.0，降为3.1.2）。
+
+```shell
+npm i webpack-cli@3.1.2 -D
+npm i webpack-cli@3.1.2 -g (全局安装用这个命令)
+```
