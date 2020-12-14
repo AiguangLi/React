@@ -71,8 +71,25 @@ npm i webpack-dev-server -g (全局安装用这个命令)
 ```
 
 此时在package.json会增加devDependencies的一个依赖，即`webpack-dev-server`，需要在package.json中的scripts增加dev属性，指向webpack-dev-server(见最终的package.json)。
+在dev属性对应的其实是打包命令，可以指定一些参数，如`--open {浏览器名称}`可以完成打包后使用指定的浏览器打开页面；`--port {端口号}`可以修改默认的端口号(8080)；`--progress`显示打包进度。
+具体可参考[webpack官网](https://webpack.js.org/configuration/dev-server/)。
+
 之后就可以使用`npm run dev`运行项目并在更改后实时打包(当前验证5.x版本不支持webpack-dev-server)。
 监听模式下会在内存中生成一个main.js文件(需要修改index.html的js执行目录为/main.js)，从而减少了从磁盘访问造成调试时间加长。
+
+## 安装html-webpack-plugin将html文件缓存在内存中
+
+main.js通过webpack-dev-server已经生成在内存中，提高了访问效率，但访问页面还需要指定html的路径，如下所示：
+`http://localhost:8080/src/index.html`
+这同样会导致访问效率变慢且不便调试。因此需要使用`html-webpack-plugin`插件将html文件进行打包。
+使用如下命令：
+
+```shell
+cnpm i html-webpack-plugin@4.1.0 -D
+```
+
+即可安装`html-webpack-plugin`插件，本项目的版本为4.1.0（注意不同版本的webpack对html-webpack-plugin的版本要求不同）。安装完成后，需要在`webpack.config.js`中增加对应的配置项。
+此时，index.html中不再需要引用main.js，`html-webpack-plugin`会自动在body中插入main.js文件。
 
 ## 问题
 
@@ -90,3 +107,4 @@ npm i webpack@4.43.0 -g (全局安装用这个命令)
 npm i webpack-cli@3.1.2 -D
 npm i webpack-cli@3.1.2 -g (全局安装用这个命令)
 ```
+
