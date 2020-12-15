@@ -1,2 +1,3 @@
 *.DS_Store
-/webpack4.x/node_modules
+/react_render/node_modules/
+/webpack4.x/node_modules/
