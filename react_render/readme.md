@@ -163,9 +163,8 @@ babel-loader：加载器
 **添加.babelrc配置文件**，并在该文件中写下如下配置信息
 
 ```json
-　　  {
-    　　　"presets": ["@babel/preset-env"],
-
-   　　　"plugins": ["@babel/plugin-transform-runtime", "@babel/plugin-proposal-class-properties"]
-　　  }
+{
+    "presets": ["@babel/preset-env"],
+    "plugins": ["@babel/plugin-transform-runtime", "@babel/plugin-proposal-class-properties"]
+}
 ```
