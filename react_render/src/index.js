@@ -11,5 +11,10 @@ const h1 = React.createElement('h1', {id: 'h1', title: '这是h1'}, '这是一�
 // 元素嵌套，将h1当作div1的子节点
 const div1 = React.createElement('div', {id: 'div1', title: '这是div1'}, '这是一个DIV', h1)
 
+const div2 = <div id="div2" title="这是jsx的div2">
+    这是jsx的div2
+    <h2>这是jsx嵌套的h2</h2>
+</div>
+
 // 使用ReactDOM将元素渲染到页面上，需要使用document.getElementById()获取容器节点
-ReactDOM.render(div1, document.getElementById('app'))
+ReactDOM.render(div2, document.getElementById('app'))
