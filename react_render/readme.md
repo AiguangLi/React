@@ -77,6 +77,43 @@ module: { //第三方模块的配置规则
     }
 ```
 
+## 内置函数式组件写法
+
+使用`function`生命函数式组件，要求该组件返回一个虚拟DOM元素或者返回`null`（空元素）。之后使用如下方式渲染函数式组件：
+
+```js
+ReactDOM.render(<Hello {...news}></Hello>, document.getElementById('app'))
+```
+
+函数式组件传值可以使用**属性名=属性值**方式，但推荐使用ES6的...语法展开对象传值:
+
+```js
+ReactDOM.render(<Hello id={news.id} title={news.title} desc={news.desc}></Hello>, document.getElementById('app'))
+```
+
+## 函数式组件支持嵌套
+
+```js
+function RenderStrings() {
+    const strings = ['list1', 'list2', 'list3']
+    const lists = strings.map(item => <li>{item}</li>)
+
+    return lists
+}
+
+function Hello(props) {
+    console.log(props);
+
+    const div2 =  <div id={props.id} title={props.title}>
+        {props.title}
+        <h2>{props.desc}</h2>
+        <RenderStrings></RenderStrings>
+    </div>
+
+    return div2
+}
+```
+
 ## 问题
 
 * render方法的第二个参数要求是一个dom元素
