@@ -3,13 +3,31 @@
 
 ## 函数式组件
 
-函数式组件使用`function`生命，首字母必须大写，调用时使用如下形式即可：
+函数式组件使用`function`声明，首字母必须大写，调用时使用如下形式即可：
 
 ```js
 <Component></Component>
 ```
 
 函数式组件可以通过props进行传值，可以参考调用RenderStrings组件的形式
+
+## 类组件
+
+类组件使用`class`声明，首字母必须大写，且需要使用`extends`关键字继承`React.Component`，并且需要实现render方法返回React的虚拟DOM元素。
+类声明完成后，使用`export default {类名}`导出类即可。如下所示：
+
+```jsx
+import React from 'react'
+
+class ClassComponent extends React.Component {
+    render() {
+        return <div>这是类组件</div>
+    }
+}
+
+export default ClassComponent
+
+```
 
 ## 引入组件时去掉文件后缀名
 

@@ -2,12 +2,14 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 
 import RenderStrings from '@/components/RenderStrings'
+import ClassComponent from '@/components/ClassComponent'
 
 function Hello(props) {
     const div2 =  <div id={props.id} title={props.title}>
         {props.title}
         <h2>{props.desc}</h2>
         <RenderStrings strings={['1', '2', '3']}></RenderStrings>
+        <ClassComponent></ClassComponent>
     </div>
 
     return div2
