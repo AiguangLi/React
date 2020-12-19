@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-import RenderStrings from './components/RenderStrings.jsx'
+import RenderStrings from '@/components/RenderStrings'
 
 function Hello(props) {
     const div2 =  <div id={props.id} title={props.title}>
