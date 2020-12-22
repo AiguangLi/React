@@ -9,7 +9,7 @@ function Hello(props) {
         {props.title}
         <h2>{props.desc}</h2>
         <RenderStrings strings={['1', '2', '3']}></RenderStrings>
-        <ClassComponent></ClassComponent>
+        <ClassComponent strings={['1', '2', '3']}></ClassComponent>
     </div>
 
     return div2
