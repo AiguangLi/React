@@ -18,8 +18,11 @@ export default class CommentList extends React.Component {
     }
 
     render() {
+        const styles = {
+            title: {color: 'red', fontSize: '20px', fontWeight: 20, textAlign: 'center'}
+        }
         return <div>
-            <h1>评论列表</h1>
+            <h1 style={styles.title}>评论列表</h1>
             {this.state.commentList.map(item => <CommentItem {...item} key={item.id}></CommentItem>)}
         </div>
     }
