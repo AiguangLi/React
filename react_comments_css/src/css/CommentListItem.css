@@ -1,0 +1,18 @@
+.box {
+    border: 1px dashed #ccc;
+    box-shadow: 0 0 10px #cccc;
+    margin: 10px;
+    padding: 10px;
+}
+
+.nickname {
+    font-size: 20px;
+    font-weight: 10;
+    line-height: 0.5
+}
+
+.content {
+    font-size: 14px;
+    font-weight: 8;
+    line-height: 0.5
+}
