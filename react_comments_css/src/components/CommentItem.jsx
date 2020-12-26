@@ -7,8 +7,10 @@ import itemCss from '@/css/CommentListItem.css'
  * props: {id, nickname, content}
  */
 export default function CommentItem(props) {
-    return <div className='box'>
-        <h1 className='nickname'>{props.nickname}</h1>
-        <p className='content'> {props.content}</p>
+    console.log(itemCss)
+
+    return <div className={itemCss.box}>
+        <h1 className={itemCss.nickname}>{props.nickname}</h1>
+        <p className={itemCss.content}> {props.content}</p>
     </div>
 }

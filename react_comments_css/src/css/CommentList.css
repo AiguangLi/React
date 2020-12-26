@@ -1,4 +1,4 @@
-.title 
+:global(.title) 
 {
     color: red;
     font-size: 20px; 
