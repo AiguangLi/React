@@ -1,6 +1,6 @@
 import React from 'react'
 
-import itemCss from '@/css/CommentListItem.css'
+import itemCss from '@/css/CommentListItem.scss'
 
 /**
  * 评论列表条目组件

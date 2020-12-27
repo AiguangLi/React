@@ -79,9 +79,52 @@ return <div className={itemCss.box}>
     </div>
 ```
 
-该方式只对class和id样式有效，如果需要把class或id用成全局的，则需要使用:global()函数，如下所示：
+该方式只对class和id样式有效，如果需要把class或id用成全局的，则需要使用:global()函数，默认均为:local()，如下所示：
 
 ```css
 :global(.title): {
 }
+```
+
+## 引入第三方样式文件
+
+引入第三方样式文件后，由于第三方文件也是css文件，且如果同样启用模块化会导致访问十分繁琐。
+因此需要对自定义样式和第三方样式分别处理，这种情况需要将自定义样式文件定义为scss文件，通过sass-loader处理，而第三方的使用css-loader，并不启用模块化。
+以Bootstrap为例。
+
+安装bootstrap（这里指定了版本3）
+
+```shell
+cnpm i bootstrap@3 -S
+```
+
+引入bootstrap的css样式（*注：bootstrap的字体文件和图片文件需要使用url-loader加载，否则会报错*）。
+
+```js
+import bootstrap from 'bootstrap/dist/css/bootstrap.css'
+```
+
+如果不做更改，那下面的样式实际引用不到bootstrap的样式，因为bootstrap也被模块化了：
+
+```js
+<button className='btn btn-primary'>按钮</button>
+```
+
+此时修改自定义样式文件为scss，安装sass-loader和node-sass，并修改webpack.config.js
+
+```shell
+cnpm i sass-loader node-sass -D
+```
+
+```js
+{test: /\.css$/, use: ['style-loader', 'css-loader']},
+{test: /\.scss$/, use: ['style-loader', {
+    loader: 'css-loader',
+    options: {
+        modules: {
+            localIdentName: '[path][name]-[local]-[hash:5]'
+            }
+        }
+    }, 'sass-loader']
+},
 ```

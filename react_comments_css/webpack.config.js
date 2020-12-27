@@ -16,7 +16,8 @@ module.exports = {
     module: { //第三方模块的配置规则
         rules: [ //第三方匹配规则
             {test: /\.js|jsx$/, use: 'babel-loader', exclude: /node_modules/},  //exclude，排除node_modules目录
-            {test: /\.css$/, use: ['style-loader', {
+            {test: /\.css$/, use: ['style-loader', 'css-loader']},
+            {test: /\.scss$/, use: ['style-loader', {
                 loader: 'css-loader',
                 options: {
                     modules: {
@@ -24,7 +25,9 @@ module.exports = {
                     }
                     
                 }
-            }]}
+            }, 'sass-loader']},
+            {test: /\.jpg|.jpeg|.png|.gif|.bmp$/, use: 'url-loader'},  //使用url-loader打包图片
+            {test: /\.tiff|.woff|.eot|.ttf|.svg$/, use: 'url-loader'},  //使用url-loader打包字体和svg文件
         ]
     },
     resolve: {
