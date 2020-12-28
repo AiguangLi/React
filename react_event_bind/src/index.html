@@ -18,13 +18,13 @@
         this.style.background = 'red'
 
         setTimeout(function() {
-            console.log(this) //指向调用者window
+            console.log(this) //指向调用者Window
         }, 2000)
     }
 
     button.onmouseup = () => {
         console.log('mouse up!')
-        console.log(this)
+        console.log(this)  //this指向Window
     }
 </script>
 </html>
