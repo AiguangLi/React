@@ -17,8 +17,16 @@ export default class Cart extends Component {
         return <div>
             <span className={this.getGoodsCountStyles()}>{this.getGoodsCount()}</span>
             <button className='btn btn-primary' onClick={() => { this.increaseCount() }}>添加</button>
-            <Tables goods={this.state.goods}></Tables>
+            <Tables goods={this.state.goods} handleDelete={this.handleDelete}></Tables>
         </div>
+    }
+
+    handleDelete = (goodsId) => {
+        let newGoods = this.state.goods.filter(item => item.id !== goodsId);
+        console.log(newGoods);
+        this.setState({
+            goods: newGoods
+        });
     }
 
     getGoodsCountStyles = () => {

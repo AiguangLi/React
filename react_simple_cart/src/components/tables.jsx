@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import bootstrap from 'bootstrap/dist/css/bootstrap.css'
 
 export default function Tables(props) {
-    console.log(props.goods)
-    return <div className="container-fluid">
+    return props.goods && props.goods.length > 0 ? 
+    <div className="container-fluid">
         <div className="row">
             <main className="col-md-9 ms-sm-auto col-lg-10 px-md-4">      
                 <h3>商品清单</h3>
@@ -16,6 +16,7 @@ export default function Tables(props) {
                                 <th>商品名称</th>
                                 <th>商品类别</th>
                                 <th>商品价格</th>
+                                <th>操作</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -26,7 +27,7 @@ export default function Tables(props) {
                                             <td>{item.name}</td>
                                             <td>{item.category}</td>
                                             <td>￥{item.price}</td>
-                                            <td><button className='btn btn-danger'>删除</button></td>
+                                            <td><button className='btn btn-danger' onClick={() => {props.handleDelete(item.id)}}>删除</button></td>
                                         </tr>
                                     })
                             }
@@ -35,5 +36,5 @@ export default function Tables(props) {
                 </div>
             </main>
         </div>
-    </div>
+    </div> : <p>商品清单为空</p>
 }
