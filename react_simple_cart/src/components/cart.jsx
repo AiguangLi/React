@@ -1,47 +1,53 @@
 import React, { Component } from 'react';
-import 'bootstrap/dist/css/bootstrap.css'
-import {getGoods} from '@/services/goods';
-import Tables from '@/components/tables'
+import 'bootstrap/dist/css/bootstrap.css';
+import { getGoods } from '@/services/goods';
+import Tables from '@/components/tables';
+import Counter from '@/components/counter';
 
 export default class Cart extends Component {
+	constructor() {
+		super();
+		this.state = {
+			count: 0,
+			goods: getGoods(),
+			counters: [
+				{
+					id: 1,
+					value: 2,
+				},
+				{
+					id: 2,
+					value: 0,
+				},
+			],
+		};
+	}
 
-    constructor() {
-        super()
-        this.state = {
-            count: 0,
-            goods: getGoods()
-        }
-    }
+	render() {
+		return (
+			<div>
+				{this.state.counters.map(counter => (
+					<Counter key={counter.id} {...counter}></Counter>
+				))}
+				<Tables goods={this.state.goods} handleDelete={this.handleDelete}></Tables>
+			</div>
+		);
+	}
 
-    render() {
-        return <div>
-            <span className={this.getGoodsCountStyles()}>{this.getGoodsCount()}</span>
-            <button className='btn btn-primary' onClick={() => { this.increaseCount() }}>添加</button>
-            <Tables goods={this.state.goods} handleDelete={this.handleDelete}></Tables>
-        </div>
-    }
+	handleDelete = goodsId => {
+		let newGoods = this.state.goods.filter(item => item.id !== goodsId);
+		this.setState({
+			goods: newGoods,
+		});
+	};
 
-    handleDelete = (goodsId) => {
-        let newGoods = this.state.goods.filter(item => item.id !== goodsId);
-        console.log(newGoods);
-        this.setState({
-            goods: newGoods
-        });
-    }
+	getGoodsCount = () => {
+		return this.state.count;
+	};
 
-    getGoodsCountStyles = () => {
-        const styles = 'badge m-2 badge-';
-
-        return this.state.count === 0 ? styles + 'warning' : styles + 'primary';
-    }
-
-    getGoodsCount = () => {
-        return this.state.count;
-    }
-
-    increaseCount = () => {
-        this.setState({
-            count: this.state.count + 1
-        })
-    }
+	increaseCount = () => {
+		this.setState({
+			count: this.state.count + 1,
+		});
+	};
 }
