@@ -15,24 +15,34 @@ class Counter extends Component {
 	}
 
 	render() {
+		console.log('Hello');
 		return (
 			<div>
-				<span className={this.getGoodsCountStyles()}>{this.state.value}</span>
 				<button
-					className="btn btn-primary btn-sm m-2"
-					onClick={() => {
-						this.increaseCount();
-					}}
-				>
-					添加
-				</button>
-				<button
-					className="btn btn-warning btn-sm m-2"
+					className="btn btn-warning btn-sm m-1"
 					onClick={() => {
 						this.decreaseCount();
 					}}
 				>
-					减少
+					-
+				</button>
+				<span className={this.getGoodsCountStyles()}>{this.state.value}</span>
+				<button
+					className="btn btn-primary btn-sm m-1"
+					onClick={() => {
+						this.increaseCount();
+					}}
+				>
+					+
+				</button>
+
+				<button
+					className="btn btn-danger btn-sm m-1"
+					onClick={() => {
+						this.props.handleDelete(this.state.id);
+					}}
+				>
+					删除
 				</button>
 			</div>
 		);

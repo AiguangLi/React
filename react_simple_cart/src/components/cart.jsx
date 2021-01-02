@@ -27,17 +27,28 @@ export default class Cart extends Component {
 		return (
 			<div>
 				{this.state.counters.map(counter => (
-					<Counter key={counter.id} {...counter}></Counter>
+					<Counter
+						key={counter.id}
+						{...counter}
+						handleDelete={this.handleDeleteCounter}
+					></Counter>
 				))}
-				<Tables goods={this.state.goods} handleDelete={this.handleDelete}></Tables>
+				<Tables goods={this.state.goods} handleDelete={this.handleDeleteGoods}></Tables>
 			</div>
 		);
 	}
 
-	handleDelete = goodsId => {
+	handleDeleteGoods = goodsId => {
 		let newGoods = this.state.goods.filter(item => item.id !== goodsId);
 		this.setState({
 			goods: newGoods,
+		});
+	};
+
+	handleDeleteCounter = counterId => {
+		let newCounters = this.state.counters.filter(item => item.id !== counterId);
+		this.setState({
+			counters: newCounters,
 		});
 	};
 
