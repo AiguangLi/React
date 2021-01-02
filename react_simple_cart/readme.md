@@ -1,54 +1,57 @@
-# react 按钮事件绑定
+# react 实例1：商品列表和模拟购物车
 
-## 最简单的方式：在组件里使用 onClick 属性绑定实例方法
+## 组件的组合
 
-注意，在 JSX 中的属性都是驼峰写法，而 html 是全部小写的。
+组件之中可以包含其他组件，由各个组件组成一个更大的组件，例如购物车可能包括商品清单，商品增减、删除操作。
+在组件中可以直接使用其他组件作为子组件，并可以向子组件传数据。同时也可以给子组件传递其他React元素或组件作为子组件的下级组件。例如：
 
-```js
-    render() {
-        return <div>
-            <h1 className='title'>评论列表</h1>
-            <button className='btn btn-primary' onClick={this.buttonClick}>按钮</button>
-            {this.state.commentList.map(item => <CommentItem {...item} key={item.id}></CommentItem>)}
-        </div>
-    }
-
-    buttonClick() {
-        alert('按钮点击了')
-    }
+```jsx
+<div>
+	<Counter {...this.state.goods}>
+  		<h3>商品清单</h3>
+	</Counter>
+</div>
 ```
 
-## 使用箭头函数，这种方式的好处是可以进行参数传递
+## 子组件的类型
 
-```js
-    render() {
-        return <div>
-            <h1 className='title'>评论列表</h1>
-            <button className='btn btn-primary' onClick={() => { this.buttonClick('hello') }}>按钮</button>
-            {this.state.commentList.map(item => <CommentItem {...item} key={item.id}></CommentItem>)}
-        </div>
-    }
+子组件的类型包括类组件和函数组件，类组件由于有状态和生命周期，适合需要自己管理数据的场景，但占用资源也高；
+函数组件没有状态，因此可以适用于只只负责渲染界面，没有维护数据变更的场景（由父组件控制）。函数组件占用资源相对较低。
 
-    buttonClick(msg) {
-        alert('按钮点击了, msg: ' + msg)
-    }
+## 子组件与父组件通信
+
+父组件可以通过props传值给子组件，如果子组件需要修改父组件的数据，应当从父组件传函数，当事件触发时，子组件调用父组件的函数进行处理。
+例如在购物车商品列表中，每一行会有一个删除按钮，删除时需要从购物车移出。购物车是商品列表的父组件，则实现方式如下：
+
+```jsx
+render() {
+//父组件：传递this.handleDelete方法给子组件做删除操作
+ return <Tables goods={this.state.goods} handleDelete={this.handleDelete}></Tables>
+}
+
+handleDelete = goodsId => {
+	let newGoods = this.state.goods.filter(item => item.id !== goodsId);
+	this.setState({
+		goods: newGoods,
+	});
+};
 ```
 
-## 推荐写法：实例方法使用箭头函数，并赋给实例属性
-
-```js
-    render() {
-        return <div>
-            <h1 className='title'>评论列表</h1>
-            <button className='btn btn-primary' onClick={() => {this.buttonClick('Hello React')}}>按钮</button>
-            {this.state.commentList.map(item => <CommentItem {...item} key={item.id}></CommentItem>)}
-        </div>
-    }
-
-    buttonClick = (msg) => {
-        console.log(this)  //this指向组件本身
-        alert('按钮点击了, msg: ' + msg)
-    }
+```jsx
+render() {
+	//...列表其他部分
+	<tr key={item.id}>
+		<td>{item.id}</td>
+		<td>{item.name}</td>
+		<td>{item.category}</td>
+		<td>￥{item.price}</td>
+		<td>
+			<button className="btn btn-sm btn-danger"
+			onClick={() => {props.handleDelete(item.id);}}>删除</button>
+		</td>
+	</tr>
+	//...
+}
 ```
 
 ## 扩展知识
@@ -113,7 +116,7 @@ button.onmouseup = () => {
 	"prettier.ignorePath": ".prettierignore", // 不使用prettier格式化的文件填写在项目的.prettierignore文件中
 	"prettier.jsxBracketSameLine": false, // 在jsx中把'>' 是否单独放一行
 	"prettier.jsxSingleQuote": false, // 在jsx中使用单引号代替双引号
-	"prettier.parser": "babylon", // 格式化的解析器，默认是babylon
+	"prettier.parser": "babel", // 格式化的解析器，默认是babel
 	"prettier.requireConfig": false, // Require a 'prettierconfig' to format prettier
 	"prettier.stylelintIntegration": false, //不让prettier使用stylelint的代码格式进行校验
 	"prettier.trailingComma": "es5", // 在对象或数组最后一个元素后面是否加逗号（在ES5中加尾逗号）
@@ -122,4 +125,12 @@ button.onmouseup = () => {
 	"vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
 	"editor.formatOnSave": true
 }
+```
+
+## bootstrap安装4.5.0
+
+bootstrap可以更新到4.5.0，以便使用其中的案例实现界面。
+
+```shell
+cnpm i bootstrap@4.5.7 -S
 ```
