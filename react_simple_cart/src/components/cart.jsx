@@ -79,7 +79,6 @@ export default class Cart extends Component {
 	};
 
 	handleDecreaseCounter = counter => {
-		
 		const counters = [...this.state.counters];
 		const index = counters.indexOf(counter);
 		counters[index].value  = counters[index].value - 1 > 0 ? counters[index].value - 1 : 0;
