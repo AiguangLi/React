@@ -12,3 +12,13 @@ ReactDOM.render(
 	document.getElementById('app')
 );
 ```
+
+## 扩展
+
+### bootstrap 的 container
+
+bootstrap 会有一个 main 区域，这个是内容区，一般会留出导航栏和侧边栏，以及左边栏
+
+```html
+<main class="container"></main>
+```

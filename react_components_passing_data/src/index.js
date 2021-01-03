@@ -8,7 +8,9 @@ import NavBar from '@/components/navbar';
 ReactDOM.render(
 	<React.Fragment>
 		<NavBar></NavBar>
-		<Cart></Cart>
+		<main className="container">
+			<Cart></Cart>
+		</main>
 	</React.Fragment>,
 
 	document.getElementById('app')
