@@ -22,3 +22,20 @@ bootstrap 会有一个 main 区域，这个是内容区，一般会留出导航�
 ```html
 <main class="container"></main>
 ```
+
+## 问题
+
+可以使用析构对象的方式取出需要的属性，需要保持变量名称和字段一致，否则会无法析构。
+
+```js
+<Cart
+	counters={this.state.counters}
+	onReset={this.resetCounters}
+	onDelete={this.handleDeleteCounter}
+	onIncrease={this.handleIncreaseCounter}
+	onDecrease={this.handleDecreaseCounter}
+></Cart>;
+
+//在Cart中析构
+const { counters, onReset, onDelete, onIncrease, onDecrease } = this.props;
+```
