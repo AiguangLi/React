@@ -23,6 +23,14 @@ bootstrap 会有一个 main 区域，这个是内容区，一般会留出导航�
 <main class="container"></main>
 ```
 
+### 安装字体图标库 font-awesome
+
+```shell
+cnpm i font-awesome@4.7.0 -S
+```
+
+在需要的地方引入 font-awesome，使用字体图标。
+
 ## 问题
 
 可以使用析构对象的方式取出需要的属性，需要保持变量名称和字段一致，否则会无法析构。
