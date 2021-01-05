@@ -21,26 +21,17 @@ export default function Pagination(props) {
 function PageItems(props) {
 	const pageElements = [];
 
-	let element;
 	const { currentPage, maxPage, onPageChanged } = props;
 	for (let page = 1; page <= maxPage; ++page) {
-		if (page == currentPage) {
-			element = (
-				<li className="page-item active" aria-current="page" key={page}>
-					<span className="page-link">{page}</span>
-				</li>
-			);
-		} else {
-			element = (
-				<li className="page-item" key={page}>
-					<a className="page-link" onClick={() => onPageChanged(page)}>
-						{page}
-					</a>
-				</li>
-			);
-		}
-
-		pageElements.push(element);
+		pageElements.push(
+			<li
+				className={page === currentPage ? 'page-item active' : 'page-item'}
+				key={page}
+				onClick={() => onPageChanged(page)}
+			>
+				<span className="page-link">{page}</span>
+			</li>
+		);
 	}
 
 	return pageElements;
