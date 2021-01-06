@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { getGoodsByPagination, deleteGoodsById } from '@/services/goods';
+import { getGoodsByPagination, deleteGoodsById, getGoodsCategories } from '@/services/goods';
 
 import Cart from '@/components/cart';
 import NavBar from '@/components/navbar';
@@ -15,6 +15,8 @@ class App extends React.Component {
 			pageSize: 3,
 			maxPage: 0,
 			total: 0,
+			categories: getGoodsCategories(),
+			currentCategory: 1,
 		};
 	}
 
@@ -51,6 +53,8 @@ class App extends React.Component {
 						total={this.state.total}
 						maxPage={this.state.maxPage}
 						onPageChanged={this.handlePageChanged}
+						categories={this.state.categories}
+						currentCategory={this.state.currentCategory}
 					></Cart>
 				</main>
 			</React.Fragment>
