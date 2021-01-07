@@ -1,5 +1,7 @@
 import paginate from '@/utils/paginate';
 
+import { getCategoryById } from '@/services/category';
+
 let goods = [
 	{ id: 1, name: '商品1', category: '日用品', price: '3.46', liked: true },
 	{ id: 2, name: '商品2', category: '食品', price: '5.6', liked: false },
@@ -11,28 +13,24 @@ let goods = [
 	{ id: 8, name: '商品8', category: '日用品', price: '122.46', liked: false },
 ];
 
-let goodsCategories = [
-	{ id: 1, name: '日用品' },
-	{ id: 2, name: '食品' },
-	{ id: 2, name: '家具' },
-	{ id: 3, name: '家电' },
-];
-
 export function getGoods() {
 	return goods;
 }
 
-export function getGoodsCategories() {
-	return goodsCategories;
-}
-
-export function getGoodsByPagination(page, pageSize) {
+export function getGoodsByPagination(page, pageSize, categoryId = 0) {
 	if (page < 1 || pageSize < 1) return [];
 
+	let filteredGoods = [];
+	if (categoryId === 0) {
+		filteredGoods = goods;
+	} else {
+		const category = getCategoryById(categoryId);
+		filteredGoods = goods.filter(item => item.category === category.name);
+	}
 	return {
-		total: goods.length,
-		maxPage: Math.ceil(goods.length / pageSize),
-		goods: paginate(goods, page, pageSize),
+		total: filteredGoods.length,
+		maxPage: Math.ceil(filteredGoods.length / pageSize),
+		goods: paginate(filteredGoods, page, pageSize),
 	};
 }
 

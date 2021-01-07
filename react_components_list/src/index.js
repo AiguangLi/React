@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { getGoodsByPagination, deleteGoodsById, getGoodsCategories } from '@/services/goods';
+import { getGoodsByPagination, deleteGoodsById } from '@/services/goods';
+import { getGoodsCategories } from '@/services/category';
 
 import Cart from '@/components/cart';
 import NavBar from '@/components/navbar';
@@ -15,8 +16,8 @@ class App extends React.Component {
 			pageSize: 3,
 			maxPage: 0,
 			total: 0,
-			categories: getGoodsCategories(),
-			currentCategory: 1,
+			categories: [{ id: 0, name: '全部' }, ...getGoodsCategories()],
+			currentCategory: 0,
 		};
 	}
 
@@ -26,11 +27,19 @@ class App extends React.Component {
 
 	refresh = () => {
 		let currentPage = this.state.currentPage;
-		let paginationGoods = getGoodsByPagination(this.state.currentPage, this.state.pageSize);
+		let paginationGoods = getGoodsByPagination(
+			this.state.currentPage,
+			this.state.pageSize,
+			this.state.currentCategory
+		);
 		if (paginationGoods.goods.length === 0 && this.state.currentPage > 1) {
 			//当前页删完后，需要刷新
 			currentPage -= 1;
-			paginationGoods = getGoodsByPagination(this.state.currentPage - 1, this.state.pageSize);
+			paginationGoods = getGoodsByPagination(
+				this.state.currentPage - 1,
+				this.state.pageSize,
+				this.state.currentCategory
+			);
 		}
 		this.setState({
 			currentPage: currentPage,
@@ -55,6 +64,7 @@ class App extends React.Component {
 						onPageChanged={this.handlePageChanged}
 						categories={this.state.categories}
 						currentCategory={this.state.currentCategory}
+						onCategoryChanged={this.handleCategoryChange}
 					></Cart>
 				</main>
 			</React.Fragment>
@@ -77,11 +87,29 @@ class App extends React.Component {
 	};
 
 	handlePageChanged = page => {
-		const paginationGoods = getGoodsByPagination(page, this.state.pageSize);
+		const paginationGoods = getGoodsByPagination(
+			page,
+			this.state.pageSize,
+			this.state.currentCategory
+		);
 		this.setState({
 			currentPage: page,
 			goods: paginationGoods.goods,
 		});
+	};
+
+	handleCategoryChange = category => {
+		const currentCategoryId = category.id;
+		if (this.state.currentCategory !== currentCategoryId) {
+			const paginationGoods = getGoodsByPagination(1, this.state.pageSize, currentCategoryId);
+			this.setState({
+				currentPage: 1,
+				goods: paginationGoods.goods,
+				currentCategory: currentCategoryId,
+				total: paginationGoods.total,
+				maxPage: paginationGoods.maxPage,
+			});
+		}
 	};
 }
 

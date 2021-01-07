@@ -15,11 +15,16 @@ export default class Cart extends Component {
 			total,
 			categories,
 			currentCategory,
+			onCategoryChanged,
 		} = this.props;
 		return (
 			<div className="row m-4">
 				<div className="col-3">
-					<ListGroup categories={categories} currentCategory={currentCategory} />
+					<ListGroup
+						categories={categories}
+						currentCategory={currentCategory}
+						onCategoryChanged={onCategoryChanged}
+					/>
 				</div>
 				<div className="col-8">
 					<Tables

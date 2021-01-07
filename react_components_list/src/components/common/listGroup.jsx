@@ -1,7 +1,7 @@
 import React from 'react';
 
 const ListGroup = props => {
-	const { categories, currentCategory } = props;
+	const { categories, currentCategory, onCategoryChanged } = props;
 	return (
 		<ul className="list-group">
 			{categories.map(category => {
@@ -11,6 +11,7 @@ const ListGroup = props => {
 							'list-group-item' + (category.id === currentCategory ? ' active' : '')
 						}
 						key={category.id}
+						onClick={() => onCategoryChanged(category)}
 					>
 						{category.name}
 					</li>
