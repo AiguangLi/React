@@ -16,7 +16,7 @@ class App extends React.Component {
 			pageSize: 3,
 			maxPage: 0,
 			total: 0,
-			categories: [{ id: 0, name: '全部' }, ...getGoodsCategories()],
+			categories: [],
 			currentCategory: 0,
 		};
 	}
@@ -46,6 +46,7 @@ class App extends React.Component {
 			goods: paginationGoods.goods,
 			maxPage: paginationGoods.maxPage,
 			total: paginationGoods.total,
+			categories: [{ id: 0, name: '全部' }, ...getGoodsCategories()],
 		});
 	};
 

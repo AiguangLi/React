@@ -21,12 +21,14 @@ export default class Cart extends Component {
 			<div className="row m-4">
 				<div className="col-3">
 					<ListGroup
-						categories={categories}
-						currentCategory={currentCategory}
-						onCategoryChanged={onCategoryChanged}
+						items={categories}
+						currentValue={currentCategory}
+						textProperty="name"
+						valueProperty="id"
+						onItemSelected={onCategoryChanged}
 					/>
 				</div>
-				<div className="col-8">
+				<div className="col">
 					<Tables
 						goods={goods}
 						handleDelete={handleDeleteGoods}
