@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const ListGroup = props => {
 	const { items, currentValue, textProperty, valueProperty, onItemSelected } = props;
@@ -20,6 +21,18 @@ const ListGroup = props => {
 			})}
 		</ul>
 	);
+};
+
+ListGroup.propTypes = {
+	items: PropTypes.array.isRequired,
+	currentValue: PropTypes.any.isRequired,
+	onItemSelected: PropTypes.func.isRequired,
+};
+
+//设置默认属性
+ListGroup.defaultProps = {
+	valueProperty: 'id',
+	textProperty: 'name',
 };
 
 export default ListGroup;

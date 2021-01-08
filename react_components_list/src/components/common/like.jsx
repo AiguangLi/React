@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 const Like = props => {
 	let className = 'fa fa-heart';
@@ -13,6 +14,10 @@ const Like = props => {
 			style={{ cursor: 'pointer' }}
 		></i>
 	);
+};
+
+Like.propTypes = {
+	onToggleLike: PropTypes.func.isRequired,
 };
 
 export default Like;

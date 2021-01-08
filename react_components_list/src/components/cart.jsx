@@ -23,8 +23,6 @@ export default class Cart extends Component {
 					<ListGroup
 						items={categories}
 						currentValue={currentCategory}
-						textProperty="name"
-						valueProperty="id"
 						onItemSelected={onCategoryChanged}
 					/>
 				</div>

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export default function Pagination(props) {
 	const { currentPage, maxPage, onPageChanged } = props;
@@ -17,6 +18,12 @@ export default function Pagination(props) {
 		</nav>
 	);
 }
+
+Pagination.propTypes = {
+	currentPage: PropTypes.number.isRequired,
+	maxPage: PropTypes.number.isRequired,
+	onPageChanged: PropTypes.func.isRequired,
+};
 
 function PageItems(props) {
 	const pageElements = [];

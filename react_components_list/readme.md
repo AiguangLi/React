@@ -42,3 +42,32 @@ const ListGroup = props => {
 
 export default ListGroup;
 ```
+
+## 默认 props 减少默认参数的传递
+
+listGroup 组件的`valueProperty`和`textProperty`大部分时间都是对应`id`和`name`，因此可以使用组件的`defaultProps`属性设置默认的 props。
+
+```js
+ListGroup.defaultProps = {
+	valueProperty: 'id',
+	textProperty: 'name',
+};
+```
+
+## 使用 prop-types 可以校验 props 参数的合法性
+
+文档：(https://www.npmjs.com/package/prop-types)[https://www.npmjs.com/package/prop-types]
+
+```shell
+cnpm i prop-types -S
+```
+
+支持`number`, `string`, `func`, `array`, `element`等等校验，以及是否必传。
+
+```js
+ListGroup.propTypes = {
+	items: PropTypes.array.isRequired,
+	currentValue: PropTypes.any.isRequired,
+	onItemSelected: PropTypes.func.isRequired,
+};
+```
