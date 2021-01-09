@@ -14,7 +14,7 @@ export default class Cart extends Component {
 			maxPage,
 			total,
 			categories,
-			currentCategory,
+			currentCategoryId,
 			onCategoryChanged,
 		} = this.props;
 		return (
@@ -22,7 +22,7 @@ export default class Cart extends Component {
 				<div className="col-3">
 					<ListGroup
 						items={categories}
-						currentValue={currentCategory}
+						currentValue={currentCategoryId}
 						onItemSelected={onCategoryChanged}
 					/>
 				</div>
