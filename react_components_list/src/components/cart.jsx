@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
-import Tables from '@/components/tables';
+import GoodsTable from '@/components/goodsTable';
 import ListGroup from '@/components/common/listGroup';
 
 export default class Cart extends Component {
@@ -16,6 +16,8 @@ export default class Cart extends Component {
 			categories,
 			currentCategoryId,
 			onCategoryChanged,
+			onSort,
+			sortType,
 		} = this.props;
 		return (
 			<div className="row m-4">
@@ -27,15 +29,17 @@ export default class Cart extends Component {
 					/>
 				</div>
 				<div className="col">
-					<Tables
+					<p className="m-8">共有{total}件商品</p>
+					<GoodsTable
 						goods={goods}
 						handleDelete={handleDeleteGoods}
 						onToggleLike={handleToggleLike}
 						onPageChanged={onPageChanged}
 						currentPage={currentPage}
 						maxPage={maxPage}
-						total={total}
-					></Tables>
+						onSort={onSort}
+						sortType={sortType}
+					></GoodsTable>
 				</div>
 			</div>
 		);

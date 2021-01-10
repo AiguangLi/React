@@ -71,3 +71,5 @@ ListGroup.propTypes = {
 	onItemSelected: PropTypes.func.isRequired,
 };
 ```
+
+## 组件通用的功能应该封装在组件内，例如 table 中的排序，应当由组件准备排序数据，然后由上层组件使用。

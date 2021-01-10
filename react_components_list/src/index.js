@@ -18,25 +18,28 @@ class App extends React.Component {
 			total: 0,
 			categories: [],
 			currentCategoryId: 0,
+			sortType: { field: 'id', direction: 'asc' },
 		};
 	}
 
 	componentDidMount() {
-		this.getCategories();
+		this.setCategories();
 		this.refresh(this.state.currentPage, this.state.currentCategoryId);
 	}
 
-	getCategories = () => {
+	setCategories = () => {
 		this.setState({
 			categories: [{ id: 0, name: '全部' }, ...getGoodsCategories()],
 		});
 	};
 
-	refresh = (currentPage, currentCategoryId) => {
+	refresh = (currentPage, currentCategoryId, sortType) => {
+		sortType = sortType || this.state.sortType;
 		let paginationGoods = getGoodsByPagination(
 			currentPage,
 			this.state.pageSize,
-			currentCategoryId
+			currentCategoryId,
+			sortType
 		);
 		if (paginationGoods.goods.length === 0 && currentPage > 1) {
 			//当前页删完后，需要刷新
@@ -44,15 +47,18 @@ class App extends React.Component {
 			paginationGoods = getGoodsByPagination(
 				currentPage,
 				this.state.pageSize,
-				currentCategoryId
+				currentCategoryId,
+				sortType
 			);
 		}
+
 		this.setState({
 			currentPage: currentPage,
 			goods: paginationGoods.goods,
 			maxPage: paginationGoods.maxPage,
 			total: paginationGoods.total,
 			currentCategoryId: currentCategoryId,
+			sortType: sortType,
 		});
 	};
 
@@ -72,6 +78,8 @@ class App extends React.Component {
 						categories={this.state.categories}
 						currentCategoryId={this.state.currentCategoryId}
 						onCategoryChanged={this.handleCategoryChange}
+						onSort={this.handleSort}
+						sortType={this.state.sortType}
 					></Cart>
 				</main>
 			</React.Fragment>
@@ -94,15 +102,9 @@ class App extends React.Component {
 	};
 
 	handlePageChanged = page => {
-		const paginationGoods = getGoodsByPagination(
-			page,
-			this.state.pageSize,
-			this.state.currentCategory
-		);
-		this.setState({
-			currentPage: page,
-			goods: paginationGoods.goods,
-		});
+		if (page !== this.state.currentPage) {
+			this.refresh(page, this.state.currentCategoryId);
+		}
 	};
 
 	handleCategoryChange = category => {
@@ -110,6 +112,10 @@ class App extends React.Component {
 		if (this.state.currentCategory !== currentCategoryId) {
 			this.refresh(1, currentCategoryId);
 		}
+	};
+
+	handleSort = sortType => {
+		this.refresh(1, this.state.currentCategoryId, sortType);
 	};
 }
 
