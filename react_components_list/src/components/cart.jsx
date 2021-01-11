@@ -17,7 +17,7 @@ export default class Cart extends Component {
 			currentCategoryId,
 			onCategoryChanged,
 			onSort,
-			sortType,
+			sortColumn,
 		} = this.props;
 		return (
 			<div className="row m-4">
@@ -38,7 +38,7 @@ export default class Cart extends Component {
 						currentPage={currentPage}
 						maxPage={maxPage}
 						onSort={onSort}
-						sortType={sortType}
+						sortColumn={sortColumn}
 					></GoodsTable>
 				</div>
 			</div>

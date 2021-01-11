@@ -18,7 +18,7 @@ class App extends React.Component {
 			total: 0,
 			categories: [],
 			currentCategoryId: 0,
-			sortType: { field: 'id', direction: 'asc' },
+			sortColumn: { field: 'id', direction: 'asc' },
 		};
 	}
 
@@ -33,13 +33,13 @@ class App extends React.Component {
 		});
 	};
 
-	refresh = (currentPage, currentCategoryId, sortType) => {
-		sortType = sortType || this.state.sortType;
+	refresh = (currentPage, currentCategoryId, sortColumn) => {
+		sortColumn = sortColumn || this.state.sortColumn;
 		let paginationGoods = getGoodsByPagination(
 			currentPage,
 			this.state.pageSize,
 			currentCategoryId,
-			sortType
+			sortColumn
 		);
 		if (paginationGoods.goods.length === 0 && currentPage > 1) {
 			//当前页删完后，需要刷新
@@ -48,7 +48,7 @@ class App extends React.Component {
 				currentPage,
 				this.state.pageSize,
 				currentCategoryId,
-				sortType
+				sortColumn
 			);
 		}
 
@@ -58,7 +58,7 @@ class App extends React.Component {
 			maxPage: paginationGoods.maxPage,
 			total: paginationGoods.total,
 			currentCategoryId: currentCategoryId,
-			sortType: sortType,
+			sortColumn: sortColumn,
 		});
 	};
 
@@ -79,7 +79,7 @@ class App extends React.Component {
 						currentCategoryId={this.state.currentCategoryId}
 						onCategoryChanged={this.handleCategoryChange}
 						onSort={this.handleSort}
-						sortType={this.state.sortType}
+						sortColumn={this.state.sortColumn}
 					></Cart>
 				</main>
 			</React.Fragment>
@@ -114,8 +114,8 @@ class App extends React.Component {
 		}
 	};
 
-	handleSort = sortType => {
-		this.refresh(1, this.state.currentCategoryId, sortType);
+	handleSort = sortColumn => {
+		this.refresh(1, this.state.currentCategoryId, sortColumn);
 	};
 }
 
