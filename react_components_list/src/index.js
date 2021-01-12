@@ -24,7 +24,7 @@ class App extends React.Component {
 
 	componentDidMount() {
 		this.setCategories();
-		this.refresh(this.state.currentPage, this.state.currentCategoryId);
+		this.refresh(this.state.currentPage, this.state.currentCategoryId, this.state.sortColumn);
 	}
 
 	setCategories = () => {
@@ -34,7 +34,6 @@ class App extends React.Component {
 	};
 
 	refresh = (currentPage, currentCategoryId, sortColumn) => {
-		sortColumn = sortColumn || this.state.sortColumn;
 		let paginationGoods = getGoodsByPagination(
 			currentPage,
 			this.state.pageSize,
@@ -89,7 +88,7 @@ class App extends React.Component {
 	handleDeleteGoods = goodsId => {
 		deleteGoodsById(goodsId);
 
-		this.refresh();
+		this.refresh(this.state.currentPage, this.state.currentCategoryId, this.state.sortColumn);
 	};
 
 	handleToggleLike = goods => {
@@ -103,14 +102,14 @@ class App extends React.Component {
 
 	handlePageChanged = page => {
 		if (page !== this.state.currentPage) {
-			this.refresh(page, this.state.currentCategoryId);
+			this.refresh(page, this.state.currentCategoryId, this.state.sortColumn);
 		}
 	};
 
 	handleCategoryChange = category => {
 		const currentCategoryId = category.id;
 		if (this.state.currentCategory !== currentCategoryId) {
-			this.refresh(1, currentCategoryId);
+			this.refresh(1, currentCategoryId, this.state.sortColumn);
 		}
 	};
 

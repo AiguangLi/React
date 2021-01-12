@@ -73,3 +73,35 @@ ListGroup.propTypes = {
 ```
 
 ## 组件通用的功能应该封装在组件内，例如 table 中的排序，应当由组件准备排序数据，然后由上层组件使用。
+
+## 封装列表组件时，对应的操作按钮与所在行数据有关，可以使用传递函数的方式，传递行对象给函数即可
+
+```js
+goodsFields = [
+	{ name: 'id', prefixLabel: '', suffixLabel: '', type: 'field' },
+	{ name: 'name', prefixLabel: '', suffixLabel: '', type: 'field' },
+	{ name: 'category', prefixLabel: '', suffixLabel: '', type: 'field' },
+	{ name: 'price', prefixLabel: '￥', suffixLabel: '', type: 'field' },
+	{
+		name: 'like',
+		type: 'operation',
+		content: goods => (
+			<Like liked={goods.liked} onToggleLike={() => this.props.onToggleLike(goods)}></Like>
+		),
+	},
+	{
+		name: 'delete',
+		type: 'operation',
+		content: goods => (
+			<button
+				className="btn btn-sm btn-danger"
+				onClick={() => {
+					this.props.handleDelete(goods.id);
+				}}
+			>
+				删除
+			</button>
+		),
+	},
+];
+```

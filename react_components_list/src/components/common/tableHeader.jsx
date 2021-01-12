@@ -20,15 +20,16 @@ class TableHeader extends Component {
 			<thead>
 				<tr>
 					{this.props.columns.map(column =>
-						column.field ? (
+						column.sort ? (
 							<th
+								key={column.field}
 								onClick={() => this.raiseSort(column.field)}
 								style={{ cursor: 'pointer' }}
 							>
 								{column.label}
 							</th>
 						) : (
-							<th>{column.label}</th>
+							<th key={column.field}>{column.label}</th>
 						)
 					)}
 				</tr>
