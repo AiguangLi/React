@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import indexStyle from '@/css/index.scss';
 
 // columns: 表头数组，如果不显示表头，则使用空对象
 //    columns元素属性：field - 列字段名称， label - 表头名称
@@ -15,24 +16,34 @@ class TableHeader extends Component {
 		this.props.onSort(sortColumn);
 	};
 
+	getHeader = column => {
+		return column.sort ? (
+			<th
+				key={column.field}
+				onClick={() => this.raiseSort(column.field)}
+				className={indexStyle.clickable}
+			>
+				{column.label} {this.getSortIcon(column)}
+			</th>
+		) : (
+			<th key={column.field}>{column.label}</th>
+		);
+	};
+
+	getSortIcon = column => {
+		const { sortColumn } = this.props;
+		if (column.field === sortColumn.field) {
+			if (sortColumn.direction === 'asc') return <i className="fa fa-sort-asc"></i>;
+			return <i className="fa fa-sort-desc"></i>;
+		}
+
+		return null;
+	};
+
 	render() {
 		return (
 			<thead>
-				<tr>
-					{this.props.columns.map(column =>
-						column.sort ? (
-							<th
-								key={column.field}
-								onClick={() => this.raiseSort(column.field)}
-								style={{ cursor: 'pointer' }}
-							>
-								{column.label}
-							</th>
-						) : (
-							<th key={column.field}>{column.label}</th>
-						)
-					)}
-				</tr>
+				<tr>{this.props.columns.map(column => this.getHeader(column))}</tr>
 			</thead>
 		);
 	}

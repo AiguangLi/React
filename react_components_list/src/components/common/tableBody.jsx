@@ -8,7 +8,7 @@ const TableBody = props => {
 				return (
 					<tr key={item[keyField]}>
 						{fields.map(field => (
-							<td key={field.name}>
+							<td key={item[keyField] + '-' + field.name}>
 								{field.type == 'field'
 									? field.prefixLabel + item[field.name] + field.suffixLabel
 									: field.content(item)}

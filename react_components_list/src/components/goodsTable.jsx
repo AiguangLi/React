@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import Like from '@/components/common/like';
 import Pagination from '@/components/common/pagination';
-import TableHeader from '@/components/common/tableHeader';
-import TableBody from '@/components/common/tableBody';
+import Table from '@/components/common/table';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import 'font-awesome/css/font-awesome.css';
@@ -54,10 +53,14 @@ class GoodsTable extends Component {
 		return goods && goods.length > 0 ? (
 			<div className="container-fluid">
 				<h3>商品清单</h3>
-				<table className="table">
-					<TableHeader onSort={onSort} sortColumn={sortColumn} columns={this.columns} />
-					<TableBody items={goods} fields={this.goodsFields} keyField={'id'} />
-				</table>
+				<Table
+					onSort={onSort}
+					sortColumn={sortColumn}
+					columns={this.columns}
+					items={goods}
+					fields={this.goodsFields}
+					keyField={'id'}
+				/>
 				<Pagination
 					currentPage={currentPage}
 					maxPage={maxPage}

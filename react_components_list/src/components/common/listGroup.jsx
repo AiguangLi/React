@@ -1,15 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import indexStyle from '@/css/index.scss';
 
 const ListGroup = props => {
 	const { items, currentValue, textProperty, valueProperty, onItemSelected } = props;
+	const defaultItemClass = indexStyle.clickable + ' list-group-item';
 	return (
 		<ul className="list-group">
 			{items.map(item => {
 				return (
 					<li
 						className={
-							'list-group-item' +
+							defaultItemClass +
 							(item[valueProperty] === currentValue ? ' active' : '')
 						}
 						key={item[valueProperty]}
