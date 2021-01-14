@@ -1,5 +1,5 @@
 {
-  "name": "ReactStudy",
+  "name": "react-router",
   "version": "1.0.0",
   "description": "React Study Demo",
   "main": "index.js",
@@ -43,6 +43,7 @@
     "lodash": "^4.17.20",
     "prop-types": "^15.7.2",
     "react": "^17.0.1",
-    "react-dom": "^17.0.1"
+    "react-dom": "^17.0.1",
+    "react-router-dom": "^5.2.0"
   }
 }
