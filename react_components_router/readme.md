@@ -44,7 +44,7 @@ const App = () => {
 
 ## Link 标签路由跳转
 
-Link 标签最终渲染为 a 标签，使用 Link 实现路由的跳转。
+Link 标签最终渲染为 a 标签，使用 Link 实现路由的跳转。但是相比 a 标签，Link 不会请求已有资源（单页面应用特性），而是增加了一个 onClick 方法拦截的 a 标签的跳转。
 
 ```jsx
 import { Link } from 'react-router-dom';
@@ -64,3 +64,43 @@ const NavBar = props => {
 	);
 };
 ```
+
+## 路由参数传递
+
+路由参数通过 props 的 match 进行传递，match 包括了
+
+-   isExact：路由是否精准匹配
+-   path：当前匹配的理由规则
+-   url：当前路由 URL
+-   params： 路由参数对象
+
+使用路由参数时，需要使用 render 属性，并使用箭头函数将 props 携带过去。路由参数如果是可选的，可以加上?。
+
+```jsx
+<Route path="/goods/:id" render={props => <GoodsDetail {...props} />}></Route>
+<Route
+	path="/orders/:year/:month?"
+	render={props => <OrderController {...props} />}
+></Route>
+```
+
+## Switch 分支路由
+
+Switch 组件会从上到下根据路由地址依次检测是否有匹配的规则，若没有就用最后一个规则渲染
+
+## 非首页路由刷新出现 404 问题解决方法
+
+在 webpack.config.js 中增加配置即可：
+
+```js
+module.exports = {
+	mode: 'development',
+	plugins: [htmlPlugin],
+	devServer: {
+		historyApiFallback: true,
+	},
+	//...
+};
+```
+
+可参考：[非首页路由刷新出现 404 问题解决方法](http://echizen.github.io/tech/2016/07-05-webpack-dev-server-react-router-config)

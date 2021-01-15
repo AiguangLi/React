@@ -7,7 +7,7 @@ const NavBar = props => {
 		<nav className="navbar navbar-dark bg-primary">
 			<div className="container-fluid">
 				{props.routers.map(route => (
-					<Link to={route.path} className="navbar-brand">
+					<Link to={route.path} className="navbar-brand" key={route.path}>
 						{route.name}
 					</Link>
 				))}
