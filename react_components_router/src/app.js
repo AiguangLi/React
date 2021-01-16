@@ -7,6 +7,7 @@ import Goods from '@/pages/goods';
 import GoodsDetail from '@/pages/goodsDetail';
 import CartController from '@/pages/cart_controller';
 import OrderController from '@/pages/order_controller';
+import UserIndex from '@/pages/users/user_index';
 
 const App = () => {
 	const routers = [
@@ -14,6 +15,7 @@ const App = () => {
 		{ path: '/goods', name: '商品' },
 		{ path: '/cart', name: '购物车' },
 		{ path: '/orders/2021/1', name: '订单' },
+		{ path: '/users', name: '个人中心' },
 	];
 	return (
 		<Router>
@@ -27,6 +29,11 @@ const App = () => {
 					<Route path="/cart">
 						<CartController />
 					</Route>
+					<Route
+						path="/users"
+						isExact={true}
+						render={props => <UserIndex {...props} />}
+					></Route>
 					<Route
 						path="/orders/:year/:month?"
 						render={props => <OrderController {...props} />}

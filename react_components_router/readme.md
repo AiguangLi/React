@@ -104,3 +104,42 @@ module.exports = {
 ```
 
 可参考：[非首页路由刷新出现 404 问题解决方法](http://echizen.github.io/tech/2016/07-05-webpack-dev-server-react-router-config)
+
+## 嵌套路由
+
+在 app.js 中定义了顶级路由外，如果子页面还有下级导航，可以使用嵌套路由。例如在个人中心下有个人信息和个人收藏路由。可以如下方式实现。
+同时需要修改 app.js 的/users 路由匹配方式为精准匹配，属性 isExact={true}。为了下级路由使用相对路径，可以使用 props.match.url 拼接相对路径，
+
+```jsx
+class UserIndex extends Component {
+	userPagesRoute = [
+		{ path: this.props.match.url + '/info', name: '个人信息' },
+		{ path: this.props.match.url + '/liked', name: '个人收藏' },
+	];
+	render() {
+		const { url } = this.props.match;
+		return (
+			<div>
+				<h3>User Index</h3>
+				<div className="container-fluid">
+					<div className="row">
+						<SideBar items={this.userPagesRoute} activeItem={this.userPagesRoute[0]} />
+					</div>
+				</div>
+				<Route path={url + '/info'}>
+					<UserInfo />
+				</Route>
+				<Route path={url + '/liked'}>
+					<UserLiked />
+				</Route>
+			</div>
+		);
+	}
+}
+```
+
+```jsx
+// app.js
+// ...
+<Route path="/users" isExact={true} render={props => <UserIndex {...props} />}></Route>
+```
