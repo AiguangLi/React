@@ -74,7 +74,7 @@ const NavBar = props => {
 -   url：当前路由 URL
 -   params： 路由参数对象
 
-使用路由参数时，需要使用 render 属性，并使用箭头函数将 props 携带过去。路由参数如果是可选的，可以加上?。
+使用路由参数时，需要使用 render 属性，并使用箭头函数将 props 携带过去。路由参数如果是可选的，可以加上?。但是应当尽量避免使用可选路由参数。
 
 ```jsx
 <Route path="/goods/:id" render={props => <GoodsDetail {...props} />}></Route>
@@ -108,7 +108,7 @@ module.exports = {
 ## 嵌套路由
 
 在 app.js 中定义了顶级路由外，如果子页面还有下级导航，可以使用嵌套路由。例如在个人中心下有个人信息和个人收藏路由。可以如下方式实现。
-同时需要修改 app.js 的/users 路由匹配方式为精准匹配，属性 isExact={true}。为了下级路由使用相对路径，可以使用 props.match.url 拼接相对路径，
+若不想在嵌套路由页面显示父级页面，则可以修改 app.js 的/users 路由匹配方式为精准匹配，使用属性 exact。为了下级路由使用相对路径，可以使用 props.match.url 拼接相对路径，
 
 ```jsx
 class UserIndex extends Component {
@@ -141,5 +141,39 @@ class UserIndex extends Component {
 ```jsx
 // app.js
 // ...
-<Route path="/users" isExact={true} render={props => <UserIndex {...props} />}></Route>
+<Route path="/users" exact render={props => <UserIndex {...props} />}></Route>
+```
+
+## url 参数（Query String）提取
+
+在路由传递的 location 中包含 search 属性，可以从中提取 url 参数，需要使用 query-string 插件。
+
+```shell
+cnpm i query-string -S
+```
+
+使用时导入 queryString，使用 queryString.parse() 方法就可以解析 url 参数了，
+需要注意的是，url 参数都是字符串，因此在有些时候需要转换为需要的数据类型。
+
+## Redirect 跳转
+
+redirect 跳转可以拦截路由，进入指定页面。例如：
+
+-   在末尾匹配不到路由时跳转到 404 页面
+-   未登录时跳转到登录页面
+-   已登录时访问登录页跳转到首页
+-   访问指定页面跳转到其他页面
+
+## 导航实现页面导航
+
+可以使用 props 中的 history 的 push 方法实现页面导航。
+如果移除当前页面，则需要使用 replace。可以理解 history 就是历史路由堆栈 r，可以有 push，goBack 和 replace 等方法实现路由。
+
+```js
+//返回上一级页面
+this.props.history.goBack();
+//使用指定页面替换当前页面（当前页面从历史导航记录移除）
+this.props.history.replace('/goods');
+//前往指定页面（返回时会返回当前页面）
+this.props.history.push('/goods');
 ```

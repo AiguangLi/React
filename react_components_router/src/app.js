@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 
 import NavBar from '@/components/navbar';
 import Home from '@/pages/home';
@@ -8,13 +8,14 @@ import GoodsDetail from '@/pages/goodsDetail';
 import CartController from '@/pages/cart_controller';
 import OrderController from '@/pages/order_controller';
 import UserIndex from '@/pages/users/user_index';
+import NotFound from '@/pages/not_found';
 
 const App = () => {
 	const routers = [
 		{ path: '/', name: '首页' },
 		{ path: '/goods', name: '商品' },
 		{ path: '/cart', name: '购物车' },
-		{ path: '/orders/2021/1', name: '订单' },
+		{ path: '/orders', name: '订单' },
 		{ path: '/users', name: '个人中心' },
 	];
 	return (
@@ -29,18 +30,16 @@ const App = () => {
 					<Route path="/cart">
 						<CartController />
 					</Route>
-					<Route
-						path="/users"
-						isExact={true}
-						render={props => <UserIndex {...props} />}
-					></Route>
-					<Route
-						path="/orders/:year/:month?"
-						render={props => <OrderController {...props} />}
-					></Route>
-					<Route path="/">
+					<Route path="/users" render={props => <UserIndex {...props} />}></Route>
+					<Route path="/orders" render={props => <OrderController {...props} />}></Route>
+					<Route path="/not-found">
+						<NotFound />
+					</Route>
+					<Route path="/" exact>
 						<Home />
 					</Route>
+					<Redirect from="/admin" to="/" />
+					<Redirect to="/not-found" />
 				</Switch>
 			</div>
 		</Router>
