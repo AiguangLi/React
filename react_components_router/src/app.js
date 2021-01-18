@@ -2,7 +2,6 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 
 import NavBar from '@/components/navbar';
-import Home from '@/pages/home';
 import Goods from '@/pages/goods';
 import GoodsDetail from '@/pages/goodsDetail';
 import CartController from '@/pages/cart_controller';
@@ -35,10 +34,7 @@ const App = () => {
 					<Route path="/not-found">
 						<NotFound />
 					</Route>
-					<Route path="/" exact>
-						<Home />
-					</Route>
-					<Redirect from="/admin" to="/" />
+					<Redirect from="/" to="/cart" />
 					<Redirect to="/not-found" />
 				</Switch>
 			</div>

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Route } from 'react-router-dom';
+import { Switch, Redirect, Route } from 'react-router-dom';
 
 import SideBar from '@/components/common/sideBar';
+import NotFound from '@/pages/not_found';
 
 import UserInfo from './user_info';
 import UserLiked from './user_liked';

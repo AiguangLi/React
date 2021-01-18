@@ -5,6 +5,7 @@ import Table from '@/components/common/table';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import 'font-awesome/css/font-awesome.css';
+import { Link } from 'react-router-dom';
 
 class GoodsTable extends Component {
 	columns = [
@@ -18,7 +19,13 @@ class GoodsTable extends Component {
 
 	goodsFields = [
 		{ name: 'id', prefixLabel: '', suffixLabel: '', type: 'field' },
-		{ name: 'name', prefixLabel: '', suffixLabel: '', type: 'field' },
+		{
+			name: 'name',
+			prefixLabel: '',
+			suffixLabel: '',
+			type: 'operation',
+			content: goods => <Link to={'/goods/' + goods.id}>{goods['name']}</Link>,
+		},
 		{ name: 'category', prefixLabel: '', suffixLabel: '', type: 'field' },
 		{ name: 'price', prefixLabel: '￥', suffixLabel: '', type: 'field' },
 		{
