@@ -38,3 +38,17 @@ handleSubmit = e => {
 //render方法内
 <form onClick={this.handleSubmit}>
 ```
+
+## 受控元素
+
+类似 input 这类的 html 元素，本身具备自己的属性，如 value，此时若将 value 与类组件的 state 绑定后，则自身的属性无法再控制（输入内容无法回显），
+需要通过类组件进行控制回显。此类元素称之为受控元素。React 中没有类似 Vue 的双向绑定，因此需要在 onChange 方法中更新 state 内容才可以回显。
+
+```js
+handleOnChange = e => {
+	const currentTarget = e.currentTarget;
+	const { account } = this.state;
+	account[currentTarget.name] = currentTarget.value;
+	this.setState({ account });
+};
+```
