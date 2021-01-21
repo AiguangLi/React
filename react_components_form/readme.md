@@ -52,3 +52,12 @@ handleOnChange = e => {
 	this.setState({ account });
 };
 ```
+
+## 表单校验
+
+Joi 校验库是一个非常实用的表单校验库(早期版本分浏览器版本 joi-browser，目前合并了）：
+[文档](https://joi.dev/api/)
+
+```shell
+cnpm i joi -S
+```
