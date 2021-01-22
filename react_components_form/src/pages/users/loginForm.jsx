@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Joi from 'joi';
 
 import Form from '@/components/common/form';
-class LoginPage extends Form {
+class LoginForm extends Form {
 	state = {
 		data: {
 			username: '',
@@ -25,6 +25,7 @@ class LoginPage extends Form {
 	render() {
 		return (
 			<div className="container">
+				<h2>登录</h2>
 				<form className="needs-validation" onSubmit={this.handleSubmit}>
 					{this.renderInput('账号', 'username')}
 					{this.renderInput('密码', 'password', 'password')}
@@ -35,4 +36,4 @@ class LoginPage extends Form {
 	}
 }
 
-export default LoginPage;
+export default LoginForm;

@@ -7,7 +7,8 @@ import GoodsDetail from '@/pages/goods/goodsDetail';
 import CartController from '@/pages/cartController';
 import OrderController from '@/pages/orderController';
 import UserIndex from '@/pages/users/userIndex';
-import LoginPage from '@/pages/users/loginPage';
+import LoginForm from '@/pages/users/loginForm';
+import RegisterForm from '@/pages/users/registerForm';
 import NotFound from '@/pages/notFound';
 
 const App = () => {
@@ -31,7 +32,10 @@ const App = () => {
 					</Route>
 					<Route path="/users" render={props => <UserIndex {...props} />}></Route>
 					<Route path="/login">
-						<LoginPage />
+						<LoginForm />
+					</Route>
+					<Route path="/register">
+						<RegisterForm />
 					</Route>
 					<Route path="/orders" render={props => <OrderController {...props} />}></Route>
 					<Route path="/not-found">
