@@ -50,3 +50,22 @@ export function deleteGoodsById(goodsId) {
 export function getGoodsById(id) {
 	return goods.filter(good => good.id === id);
 }
+
+export function addGoods(goodsForm) {
+	const newGoodsId = _.reduce(
+		goods,
+		(maxId, goods) => {
+			return maxId > goods.id ? maxId : goods.id;
+		},
+		goods[0].id
+	);
+
+	console.log(goodsForm);
+
+	const newGoods = {
+		id: newGoodsId + 1,
+		...goodsForm,
+	};
+
+	goods.push(newGoods);
+}

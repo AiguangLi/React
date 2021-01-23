@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Switch, Redirect, Route } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 
 import SideBar from '@/components/common/sideBar';
 

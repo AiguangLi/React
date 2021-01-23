@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Joi from 'joi';
 
 import Input from '@/components/common/input';
+import Select from '@/components/common/select';
 
 class Form extends Component {
 	state = {
@@ -11,13 +12,16 @@ class Form extends Component {
 
 	handleSubmit = e => {
 		e.preventDefault();
-		const error = this.validate();
+		const validatedResult = this.validate();
 
-		this.setState({
-			errors: error || {},
-		});
-
-		this.doSubmit();
+		// this.doSubmit应当放在回调中，要不由于异步操作，可能导致this.state.data的数据没完成更新就提交数据
+		this.setState(
+			{
+				errors: validatedResult.errors || {},
+				data: validatedResult.value,
+			},
+			this.doSubmit
+		);
 	};
 
 	validate = () => {
@@ -26,15 +30,17 @@ class Form extends Component {
 			abortEarly: false,
 		};
 
-		const { error } = Joi.object(this.validationSchema).validate(data, options);
-		if (!error) return null;
+		// Joi会将验证后转换的数据放到value中，例如小数点精确度为2，实际输入的字符串会被转换为最多2位小数的数字
+		// 因此，提交的时候需要将value赋值给state状态
+		const { error, value } = Joi.object(this.validationSchema).validate(data, options);
+		if (!error) return { value: value };
 
 		const errors = {};
 		for (let item of error.details) {
 			errors[item.path[0]] = item.message;
 		}
 
-		return errors;
+		return { errors: errors };
 	};
 
 	//校验单个字段
@@ -48,6 +54,7 @@ class Form extends Component {
 	};
 
 	handleOnChange = ({ currentTarget: input }) => {
+		console.log(`${input.name}:${input.value}`);
 		const { data, errors } = this.state;
 		data[input.name] = input.value;
 		const error = this.validateProperty(input);
@@ -70,9 +77,27 @@ class Form extends Component {
 		);
 	};
 
+	renderSelect = (label, name, items, selected) => {
+		return (
+			<Select
+				label={label}
+				items={items}
+				selected={selected}
+				name={name}
+				value={selected}
+				onChange={this.handleOnChange}
+			/>
+		);
+	};
+
 	renderButton = (buttonName, type = 'submit') => {
 		return (
-			<button type={type} className="btn btn-primary" disabled={this.validate() || false}>
+			<button
+				type={type}
+				className="btn btn-primary"
+				disabled={this.validate().errors || false}
+				onClick={this.handleSubmit}
+			>
 				{buttonName}
 			</button>
 		);

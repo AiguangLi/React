@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.css';
 import GoodsTable from '@/components/goodsTable';
 import ListGroup from '@/components/common/listGroup';
@@ -29,7 +30,13 @@ export default class Cart extends Component {
 					/>
 				</div>
 				<div className="col">
-					<p className="m-8">共有{total}件商品</p>
+					<p className="m-8">
+						共有{total}件商品
+						<Link to="/goods/add" className="ml-2 btn btn-primary">
+							添加商品
+						</Link>
+					</p>
+
 					<GoodsTable
 						goods={goods}
 						handleDelete={handleDeleteGoods}
