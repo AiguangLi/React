@@ -12,7 +12,12 @@ module.exports = {
 	mode: 'development',
 	plugins: [htmlPlugin],
 	devServer: {
-		historyApiFallback: true,
+		historyApiFallback: {
+			index: '/',
+		},
+		port: 8090, //dev server的访问端口
+		open: true, //run dev时是否打开浏览器访问
+		compress: false, //是否压缩
 	},
 	module: {
 		//第三方模块的配置规则

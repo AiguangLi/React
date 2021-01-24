@@ -42,14 +42,19 @@ class GoodsTable extends Component {
 			name: 'delete',
 			type: 'operation',
 			content: goods => (
-				<button
-					className="btn btn-sm btn-danger"
-					onClick={() => {
-						this.props.handleDelete(goods.id);
-					}}
-				>
-					删除
-				</button>
+				<div>
+					<Link to={`/goods/edit/${goods.id}`} className="btn btn-sm btn-primary">
+						编辑
+					</Link>
+					<button
+						className="ml-2 btn btn-sm btn-danger"
+						onClick={() => {
+							this.props.handleDelete(goods.id);
+						}}
+					>
+						删除
+					</button>
+				</div>
 			),
 		},
 	];

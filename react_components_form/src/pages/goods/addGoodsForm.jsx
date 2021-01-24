@@ -13,6 +13,7 @@ class AddGoodsForm extends Form {
 			category: '',
 		},
 		errors: {},
+		categories: [],
 	};
 
 	validationSchema = {
@@ -21,6 +22,15 @@ class AddGoodsForm extends Form {
 		category: Joi.string().required().label('商品类别'),
 	};
 
+	componentDidMount() {
+		const categories = getGoodsCategories().map(category => category.name);
+
+		this.setState({
+			categories: categories,
+			data: { category: categories[0], name: '', price: '' },
+		});
+	}
+
 	doSubmit = () => {
 		addGoods(this.state.data);
 
@@ -28,13 +38,13 @@ class AddGoodsForm extends Form {
 	};
 
 	render() {
-		const categories = getGoodsCategories().map(category => category.name);
+		const { categories } = this.state;
 		return (
 			<div className="container">
 				<h2>添加商品</h2>
 				{this.renderInput('名称', 'name')}
 				{/* {this.renderInput('类别', 'category')} */}
-				{this.renderSelect('类别', 'category', categories, categories[0].name)}
+				{this.renderSelect('类别', 'category', categories, categories[0])}
 				{this.renderInput('价格', 'price')}
 				{this.renderButton('保存')}
 			</div>

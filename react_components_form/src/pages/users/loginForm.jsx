@@ -15,8 +15,6 @@ class LoginForm extends Form {
 		username: Joi.string().min(3).max(32).required().label('账号'),
 		password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{6,30}$')).label('密码'),
 	};
-	//.message('账号长度3-32个字符')
-	//.message('密码只能是数字或字母的组合，至少6位')
 
 	doSubmit = () => {
 		console.log('Submitted');

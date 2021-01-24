@@ -26,8 +26,11 @@ class Form extends Component {
 
 	validate = () => {
 		const { data } = this.state;
+
+		// allowUnknown: true --> 允许未知的key，此时对未配置schema的不做校验
 		const options = {
 			abortEarly: false,
+			allowUnknown: true,
 		};
 
 		// Joi会将验证后转换的数据放到value中，例如小数点精确度为2，实际输入的字符串会被转换为最多2位小数的数字
@@ -54,7 +57,6 @@ class Form extends Component {
 	};
 
 	handleOnChange = ({ currentTarget: input }) => {
-		console.log(`${input.name}:${input.value}`);
 		const { data, errors } = this.state;
 		data[input.name] = input.value;
 		const error = this.validateProperty(input);
@@ -82,8 +84,8 @@ class Form extends Component {
 			<Select
 				label={label}
 				items={items}
-				selected={selected}
 				name={name}
+				selected={selected}
 				value={selected}
 				onChange={this.handleOnChange}
 			/>

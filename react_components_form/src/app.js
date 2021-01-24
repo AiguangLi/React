@@ -11,6 +11,7 @@ import LoginForm from '@/pages/users/loginForm';
 import RegisterForm from '@/pages/users/registerForm';
 import NotFound from '@/pages/notFound';
 import AddGoodsForm from '@/pages/goods/addGoodsForm';
+import EditGoodsForm from '@/pages/goods/editGoodsForm';
 
 const App = () => {
 	const routers = [
@@ -24,6 +25,10 @@ const App = () => {
 			<div>
 				<NavBar routers={routers}></NavBar>
 				<Switch>
+					<Route
+						path="/goods/edit/:id"
+						render={props => <EditGoodsForm {...props} />}
+					></Route>
 					<Route path="/goods/add" render={props => <AddGoodsForm {...props} />}></Route>
 					<Route path="/goods/:id" render={props => <GoodsDetail {...props} />}></Route>
 					<Route path="/goods">

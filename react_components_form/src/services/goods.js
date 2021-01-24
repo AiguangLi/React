@@ -1,6 +1,7 @@
 import paginate from '@/utils/paginate';
 import { getCategoryById } from '@/services/category';
 import _ from 'lodash';
+import { keys } from 'regenerator-runtime';
 
 let goods = [
 	{ id: 1, name: '商品1', category: '日用品', price: 3.46, liked: true },
@@ -47,8 +48,10 @@ export function deleteGoodsById(goodsId) {
 	goods = newGoods;
 }
 
-export function getGoodsById(id) {
-	return goods.filter(good => good.id === id);
+export function getGoodsById(goodsId) {
+	const goodsToFount = goods.filter(item => item.id == goodsId);
+
+	return goodsToFount.length === 1 ? goodsToFount[0] : null;
 }
 
 export function addGoods(goodsForm) {
@@ -60,12 +63,29 @@ export function addGoods(goodsForm) {
 		goods[0].id
 	);
 
-	console.log(goodsForm);
-
 	const newGoods = {
 		id: newGoodsId + 1,
 		...goodsForm,
 	};
 
 	goods.push(newGoods);
+}
+
+export function editGoods(goodsForm) {
+	const goodsToEdit = getGoodsById(goodsForm.id);
+	if (!goodsToEdit) {
+		return { success: false, error: `Goods with Id ${goodsForm.id} Not Found.` };
+	}
+
+	for (let key in goodsForm) {
+		if (key in Object.keys(goodsToEdit)) {
+			goodsToEdit[key] = goodsForm[key];
+		}
+	}
+	console.log('Form: ', goodsForm);
+	console.log('Updated: ', goodsToEdit);
+
+	//goods[index] = goodsToEdit;
+
+	return { success: true };
 }
