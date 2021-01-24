@@ -11,10 +11,15 @@ const htmlPlugin = new HtmlWebpackPlugin({
 module.exports = {
 	mode: 'development',
 	plugins: [htmlPlugin],
+	// entry设置打包入口文件, output设置输出文件， devServer的historyApiFallback用于解决刷新404的问题
+	entry: './src/index.js',
+	output: {
+		path: path.join(__dirname, '/'),
+		publicPath: '/',
+		filename: 'main.js',
+	},
 	devServer: {
-		historyApiFallback: {
-			index: '/',
-		},
+		historyApiFallback: true,
 		port: 8090, //dev server的访问端口
 		open: true, //run dev时是否打开浏览器访问
 		compress: false, //是否压缩

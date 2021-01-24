@@ -78,14 +78,10 @@ export function editGoods(goodsForm) {
 	}
 
 	for (let key in goodsForm) {
-		if (key in Object.keys(goodsToEdit)) {
+		if (key in goodsToEdit) {
 			goodsToEdit[key] = goodsForm[key];
 		}
 	}
-	console.log('Form: ', goodsForm);
-	console.log('Updated: ', goodsToEdit);
-
-	//goods[index] = goodsToEdit;
 
 	return { success: true };
 }

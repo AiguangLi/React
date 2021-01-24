@@ -32,8 +32,9 @@ class EditGoodsForm extends Form {
 		}
 		const categories = getGoodsCategories().map(category => category.name);
 
+		// 使用展开操作符复制goods，防止直接修改数据（如果是请求服务器接口不复制不影响，但是应当防止表单直接修改原始数据）
 		this.setState({
-			data: goods,
+			data: { ...goods },
 			categories: categories,
 		});
 	}
