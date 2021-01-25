@@ -32,12 +32,24 @@ class EditGoodsForm extends Form {
 		}
 		const categories = getGoodsCategories().map(category => category.name);
 
-		// 使用展开操作符复制goods，防止直接修改数据（如果是请求服务器接口不复制不影响，但是应当防止表单直接修改原始数据）
+		// 使用mapToViewModel只取页面需要的数据，防止直接修改数据（如果是请求服务器接口不复制不影响，但是应当防止表单直接修改原始数据）
 		this.setState({
-			data: { ...goods },
+			data: this.mapToViewModel(goods),
 			categories: categories,
 		});
 	}
+
+	// 只取视图需要的数据，同时若返回的数据有对象，则可以处理对象
+	mapToViewModel = goods => {
+		const viewData = { ...this.state.data };
+		for (let key in viewData) {
+			if (goods[key]) {
+				viewData[key] = goods[key];
+			}
+		}
+
+		return viewData;
+	};
 
 	validationSchema = {
 		id: Joi.number().required().label('商品编号'),

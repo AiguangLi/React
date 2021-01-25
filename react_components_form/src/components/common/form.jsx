@@ -30,7 +30,7 @@ class Form extends Component {
 		// allowUnknown: true --> 允许未知的key，此时对未配置schema的不做校验
 		const options = {
 			abortEarly: false,
-			allowUnknown: true,
+			allowUnknown: false,
 		};
 
 		// Joi会将验证后转换的数据放到value中，例如小数点精确度为2，实际输入的字符串会被转换为最多2位小数的数字

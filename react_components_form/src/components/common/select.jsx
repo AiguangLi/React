@@ -6,7 +6,8 @@ const Select = ({ items, name, label, value, ...rest }) => {
 			<label htmlFor={name} className="form-label">
 				{label}
 			</label>
-			<select id={name} name={name} className="form-control" defaultValue={value} {...rest}>
+			<select id={name} name={name} className="form-control" value={value} {...rest}>
+				<option value="">请选择{label}</option>
 				{items.map(item => (
 					<option key={item}>{item}</option>
 				))}

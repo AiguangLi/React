@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.css';
 import GoodsTable from '@/components/goodsTable';
 import ListGroup from '@/components/common/listGroup';
+import Search from '@/components/common/search';
 
 export default class Cart extends Component {
 	render() {
@@ -17,6 +18,8 @@ export default class Cart extends Component {
 			categories,
 			currentCategoryId,
 			onCategoryChanged,
+			onSearchChanged,
+			searchKey,
 			onSort,
 			sortColumn,
 		} = this.props;
@@ -36,7 +39,14 @@ export default class Cart extends Component {
 							添加商品
 						</Link>
 					</p>
-
+					<p>
+						<Search
+							name="name"
+							placeholder="搜索商品名称"
+							value={searchKey}
+							onChange={onSearchChanged}
+						/>
+					</p>
 					<GoodsTable
 						goods={goods}
 						handleDelete={handleDeleteGoods}

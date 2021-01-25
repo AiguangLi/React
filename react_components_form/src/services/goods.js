@@ -22,16 +22,26 @@ export function getGoodsByPagination(
 	page,
 	pageSize,
 	categoryId = 0,
+	searchName,
 	sortType = { field: 'id', direction: 'asc' }
 ) {
 	if (page < 1 || pageSize < 1) return [];
 
 	let filteredGoods = [];
 	if (categoryId === 0) {
-		filteredGoods = goods;
+		if (!searchName) {
+			filteredGoods = goods;
+		} else {
+			filteredGoods = goods.filter(item => item.name.indexOf(searchName) !== -1);
+		}
 	} else {
 		const category = getCategoryById(categoryId);
-		filteredGoods = goods.filter(item => item.category === category.name);
+		filteredGoods = goods.filter(item => {
+			return (
+				item.category === category.name &&
+				(searchName ? item.name.indexOf(searchName) !== -1 : true)
+			);
+		});
 	}
 
 	filteredGoods = _.orderBy(filteredGoods, [sortType.field], [sortType.direction]);

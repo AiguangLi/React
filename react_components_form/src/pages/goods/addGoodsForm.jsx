@@ -27,7 +27,6 @@ class AddGoodsForm extends Form {
 
 		this.setState({
 			categories: categories,
-			data: { category: categories[0], name: '', price: '' },
 		});
 	}
 
@@ -44,7 +43,7 @@ class AddGoodsForm extends Form {
 				<h2>添加商品</h2>
 				{this.renderInput('名称', 'name')}
 				{/* {this.renderInput('类别', 'category')} */}
-				{this.renderSelect('类别', 'category', categories, categories[0])}
+				{this.renderSelect('类别', 'category', categories, this.state.data.category)}
 				{this.renderInput('价格', 'price')}
 				{this.renderButton('保存')}
 			</div>

@@ -18,12 +18,18 @@ class CartController extends Component {
 			categories: [],
 			currentCategoryId: 0,
 			sortColumn: { field: 'id', direction: 'asc' },
+			searchKey: '',
 		};
 	}
 
 	componentDidMount() {
 		this.setCategories();
-		this.refresh(this.state.currentPage, this.state.currentCategoryId, this.state.sortColumn);
+		this.refresh(
+			this.state.currentPage,
+			this.state.currentCategoryId,
+			this.state.searchKey,
+			this.state.sortColumn
+		);
 	}
 
 	setCategories = () => {
@@ -32,11 +38,12 @@ class CartController extends Component {
 		});
 	};
 
-	refresh = (currentPage, currentCategoryId, sortColumn) => {
+	refresh = (currentPage, currentCategoryId, searchKey, sortColumn) => {
 		let paginationGoods = getGoodsByPagination(
 			currentPage,
 			this.state.pageSize,
 			currentCategoryId,
+			searchKey,
 			sortColumn
 		);
 		if (paginationGoods.goods.length === 0 && currentPage > 1) {
@@ -46,6 +53,7 @@ class CartController extends Component {
 				currentPage,
 				this.state.pageSize,
 				currentCategoryId,
+				searchKey,
 				sortColumn
 			);
 		}
@@ -57,6 +65,7 @@ class CartController extends Component {
 			total: paginationGoods.total,
 			currentCategoryId: currentCategoryId,
 			sortColumn: sortColumn,
+			searchKey: searchKey,
 		});
 	};
 
@@ -75,14 +84,25 @@ class CartController extends Component {
 				onCategoryChanged={this.handleCategoryChange}
 				onSort={this.handleSort}
 				sortColumn={this.state.sortColumn}
+				searchKey={this.state.searchKey}
+				onSearchChanged={this.handleSearchChanged}
 			></Cart>
 		);
 	}
 
+	handleSearchChanged = ({ currentTarget: input }) => {
+		this.refresh(1, this.state.currentCategoryId, input.value.trim(), this.state.sortColumn);
+	};
+
 	handleDeleteGoods = goodsId => {
 		deleteGoodsById(goodsId);
 
-		this.refresh(this.state.currentPage, this.state.currentCategoryId, this.state.sortColumn);
+		this.refresh(
+			this.state.currentPage,
+			this.state.currentCategoryId,
+			this.state.searchKey,
+			this.state.sortColumn
+		);
 	};
 
 	handleToggleLike = goods => {
@@ -96,19 +116,25 @@ class CartController extends Component {
 
 	handlePageChanged = page => {
 		if (page !== this.state.currentPage) {
-			this.refresh(page, this.state.currentCategoryId, this.state.sortColumn);
+			this.refresh(
+				page,
+				this.state.currentCategoryId,
+				this.state.searchKey,
+				this.state.sortColumn
+			);
 		}
 	};
 
 	handleCategoryChange = category => {
 		const currentCategoryId = category.id;
 		if (this.state.currentCategory !== currentCategoryId) {
-			this.refresh(1, currentCategoryId, this.state.sortColumn);
+			//分类发生改变，清空搜索框
+			this.refresh(1, currentCategoryId, '', this.state.sortColumn);
 		}
 	};
 
 	handleSort = sortColumn => {
-		this.refresh(1, this.state.currentCategoryId, sortColumn);
+		this.refresh(1, this.state.currentCategoryId, this.state.searchKey, sortColumn);
 	};
 }
 
