@@ -90,8 +90,8 @@ class CartController extends Component {
 		);
 	}
 
-	handleSearchChanged = ({ currentTarget: input }) => {
-		this.refresh(1, this.state.currentCategoryId, input.value.trim(), this.state.sortColumn);
+	handleSearchChanged = keyword => {
+		this.refresh(1, this.state.currentCategoryId, keyword, this.state.sortColumn);
 	};
 
 	handleDeleteGoods = goodsId => {

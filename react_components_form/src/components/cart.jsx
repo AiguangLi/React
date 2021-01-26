@@ -35,18 +35,16 @@ export default class Cart extends Component {
 				<div className="col">
 					<p className="m-8">
 						共有{total}件商品
-						<Link to="/goods/add" className="ml-2 btn btn-primary">
+						<Link to="/goods/add" className="ml-2 btn btn-sm btn-primary">
 							添加商品
 						</Link>
 					</p>
-					<p>
-						<Search
-							name="name"
-							placeholder="搜索商品名称"
-							value={searchKey}
-							onChange={onSearchChanged}
-						/>
-					</p>
+					<Search
+						name="name"
+						placeholder="搜索商品名称"
+						value={searchKey}
+						onChange={onSearchChanged}
+					/>
 					<GoodsTable
 						goods={goods}
 						handleDelete={handleDeleteGoods}
