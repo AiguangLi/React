@@ -5,7 +5,7 @@
   },
   "Good": {
     "name": "string",
-    "category": "Category",
+    "category": "string",
     "price": "int",
     "createdAt": "date",
     "liked": "boolean"
