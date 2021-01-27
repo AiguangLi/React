@@ -1,13 +1,13 @@
 {
-  "Goods": {
+  "Category": {
+    "name": "string",
+    "createdAt": "date"
+  },
+  "Good": {
     "name": "string",
     "category": "Category",
     "price": "int",
     "createdAt": "date",
     "liked": "boolean"
-  },
-  "Category": {
-    "name": "string",
-    "createdAt": "date"
-  }
+  }, 
 }
