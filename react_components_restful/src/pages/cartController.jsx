@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { getGoodsByPagination, deleteGoodsById } from '@/services/goods';
 import { getGoodsCategories } from '@/services/category';
-import { listGoodsByPagination } from '@/services/goodsMock';
+import { listGoodsByPagination, deleteGoods } from '@/services/goodsMock';
 
 import Cart from '@/components/cart';
 
@@ -31,6 +31,9 @@ class CartController extends Component {
 			this.state.searchKey,
 			this.state.sortColumn
 		);
+
+		listGoodsByPagination(1, 20);
+		deleteGoods(21);
 	}
 
 	setCategories = () => {

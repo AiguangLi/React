@@ -1,9 +1,18 @@
-import axios from 'axios';
-
-const HOST_URL = 'https://mockend.com/AiguangLi/React/goods';
+import httpService from '@/services/httpService';
+import config from '@/config/config.json';
 
 export async function listGoodsByPagination(page, pageSize) {
-	const restUrl = `${HOST_URL}?offset=${page * pageSize}&limit=${pageSize}`;
+	const restUrl = `${config.apiHost}?offset=${page * pageSize}&limit=${pageSize}`;
 
-	const { data, headers, status, statusText } = await axios.get(restUrl);
+	const { data, headers, status, statusText } = await httpService.get(restUrl);
+
+	console.log(data);
+}
+
+export async function deleteGoods(id) {
+	const restUrl = `${config.apiHost}/${id}`;
+
+	const { data, headers, status, statusText } = await httpService.delete(restUrl);
+
+	console.log(data);
 }
