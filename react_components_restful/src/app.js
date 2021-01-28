@@ -19,6 +19,7 @@ const App = () => {
 		{ path: '/goods', name: '商品' },
 		{ path: '/cart', name: '购物车' },
 		{ path: '/orders', name: '订单' },
+		{ path: '/posts', name: '文章' },
 		{ path: '/users', name: '个人中心' },
 	];
 	return (
