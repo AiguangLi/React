@@ -1,3 +1,4 @@
 {
-    "apiHost": "https://mockend.com/AiguangLi/React/goods"
+    "goodsHost": "https://mockend.com/AiguangLi/React/goods",
+    "postHost": "http://jsonplaceholder.typicode.com/posts"
 }

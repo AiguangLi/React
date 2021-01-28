@@ -12,6 +12,7 @@ import RegisterForm from '@/pages/users/registerForm';
 import NotFound from '@/pages/notFound';
 import AddGoodsForm from '@/pages/goods/addGoodsForm';
 import EditGoodsForm from '@/pages/goods/editGoodsForm';
+import PostIndex from '@/pages/posts/postIndex';
 
 const App = () => {
 	const routers = [
@@ -25,6 +26,9 @@ const App = () => {
 			<div>
 				<NavBar routers={routers}></NavBar>
 				<Switch>
+					<Route path="/posts">
+						<PostIndex />
+					</Route>
 					<Route
 						path="/goods/edit/:id"
 						render={props => <EditGoodsForm {...props} />}

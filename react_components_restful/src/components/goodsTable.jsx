@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import Like from '@/components/common/like';
 import Pagination from '@/components/common/pagination';
 import Table from '@/components/common/table';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import 'font-awesome/css/font-awesome.css';
-import { Link } from 'react-router-dom';
 
 class GoodsTable extends Component {
 	columns = [

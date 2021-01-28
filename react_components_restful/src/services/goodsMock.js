@@ -2,7 +2,7 @@ import httpService from '@/services/httpService';
 import config from '@/config/config.json';
 
 export async function listGoodsByPagination(page, pageSize) {
-	const restUrl = `${config.apiHost}?offset=${page * pageSize}&limit=${pageSize}`;
+	const restUrl = `${config.goodsHost}?offset=${page * pageSize}&limit=${pageSize}`;
 
 	const { data, headers, status, statusText } = await httpService.get(restUrl);
 
@@ -10,7 +10,7 @@ export async function listGoodsByPagination(page, pageSize) {
 }
 
 export async function deleteGoods(id) {
-	const restUrl = `${config.apiHost}/${id}`;
+	const restUrl = `${config.goodsHost}/${id}`;
 
 	const { data, headers, status, statusText } = await httpService.delete(restUrl);
 
