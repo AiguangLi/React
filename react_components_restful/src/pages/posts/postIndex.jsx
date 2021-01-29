@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-
+import postsService from '@/services/postsService';
 import Table from '@/components/common/table';
-import httpService from '@/services/httpService';
-import config from '@/config/config.json';
 
 class PostIndex extends Component {
 	state = { posts: [], sortColumn: { field: 'id', direction: 'asc' } };
@@ -48,16 +46,27 @@ class PostIndex extends Component {
 	];
 
 	async componentDidMount() {
-		try {
-			const { data } = await httpService.get(config.postHost);
+		const { data, status, statusText } = await postsService.listAll();
+
+		if (status === 200 || status === 201) {
 			this.setState({ posts: data });
-		} catch (ex) {
-			console.log(ex);
+		} else {
+			console.log('Error: ', statusText);
+
+			return;
 		}
 	}
 
-	handleDelete = postsId => {
-		console.log('posts delete');
+	handleDelete = async postId => {
+		const { status, statusText } = await postsService.deletePost(postId);
+
+		if (status === 200 || status === 201) {
+			const posts = this.state.posts.filter(post => post.id !== postId);
+
+			this.setState({ posts: posts });
+		} else {
+			console.log('Error', statusText);
+		}
 	};
 
 	handleSort = sortColumn => {
