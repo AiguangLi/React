@@ -1,50 +1,43 @@
 import React from 'react';
 import Joi from 'joi';
 
-import { editGoods, getGoodsById } from '@/services/goods';
-import { getGoodsCategories } from '@/services/category';
+import postsService from '@/services/postsService';
 import Form from '@/components/common/form';
 
-class EditGoodsForm extends Form {
+class EditPostForm extends Form {
 	state = {
 		data: {
 			id: this.props.match.params.id,
-			name: '',
-			price: '',
-			category: '',
+			title: '',
+			body: '',
 		},
 		errors: {},
-		categories: [],
 	};
 
-	componentDidMount() {
-		const goodsId = this.props.match.params.id;
-		if (!goodsId) {
+	async componentDidMount() {
+		const postId = this.state.data.id;
+		if (!postId) {
 			this.props.history.replace('/not-found');
 
 			return;
 		}
-		const goods = getGoodsById(this.props.match.params.id);
-		if (!goods) {
-			this.props.history.replace('/not-found');
+		const { data, status, statusText } = await postsService.get(postId);
+
+		if (status === 200 || status === 201) {
+			this.setState({ data: this.mapToViewModel(data) });
+		} else {
+			console.log('Error: ', statusText);
 
 			return;
 		}
-		const categories = getGoodsCategories().map(category => category.name);
-
-		// 使用mapToViewModel只取页面需要的数据，防止直接修改数据（如果是请求服务器接口不复制不影响，但是应当防止表单直接修改原始数据）
-		this.setState({
-			data: this.mapToViewModel(goods),
-			categories: categories,
-		});
 	}
 
 	// 只取视图需要的数据，同时若返回的数据有对象，则可以处理对象
-	mapToViewModel = goods => {
+	mapToViewModel = post => {
 		const viewData = { ...this.state.data };
 		for (let key in viewData) {
-			if (goods[key]) {
-				viewData[key] = goods[key];
+			if (post[key]) {
+				viewData[key] = post[key];
 			}
 		}
 
@@ -52,37 +45,34 @@ class EditGoodsForm extends Form {
 	};
 
 	validationSchema = {
-		id: Joi.number().required().label('商品编号'),
-		name: Joi.string().min(2).required().label('商品名称'),
-		price: Joi.number().precision(2).positive().required().label('价格'),
-		category: Joi.string().required().label('商品类别'),
+		id: Joi.number().required().label('文章编号'),
+		title: Joi.string().min(2).max(128).required().label('标题'),
+		body: Joi.string().min(5).max(256).required().label('内容'),
 	};
 
-	doSubmit = () => {
-		const result = editGoods(this.state.data);
+	doSubmit = async () => {
+		const postId = this.state.data.id;
+		const { status, statusText } = await postsService.edit(postId, this.state.data);
 
-		if (result.success === false) {
-			console.error(result.error);
+		if (status === 200 || status === 201) {
+			this.props.history.goBack();
+		} else {
+			console.log('Error: ', statusText);
 
 			return;
 		}
-
-		this.props.history.goBack();
 	};
 
 	render() {
-		const { data, categories } = this.state;
 		return (
 			<div className="container">
-				<h2>编辑商品</h2>
-				{this.renderInput('名称', 'name')}
-				{/* {this.renderInput('类别', 'category')} */}
-				{this.renderSelect('类别', 'category', categories, data.category)}
-				{this.renderInput('价格', 'price')}
+				<h2>编辑文章</h2>
+				{this.renderInput('标题', 'title')}
+				{this.renderInput('内容', 'body')}
 				{this.renderButton('保存')}
 			</div>
 		);
 	}
 }
 
-export default EditGoodsForm;
+export default EditPostForm;

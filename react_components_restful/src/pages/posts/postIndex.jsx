@@ -74,7 +74,6 @@ class PostIndex extends Component {
 	};
 
 	render() {
-		const { posts, sortColumn } = this.state;
 		return <div className="container">{this.getRenderBody()}</div>;
 	}
 
@@ -82,7 +81,13 @@ class PostIndex extends Component {
 		const { posts, sortColumn } = this.state;
 		return posts && posts.length > 0 ? (
 			<React.Fragment>
-				<h3>文章列表</h3>
+				<div className="row my-2">
+					<h3>文章列表</h3>
+					<Link className="btn btn-primary ml-2" to="/posts/add">
+						添加文章
+					</Link>
+				</div>
+
 				<Table
 					onSort={this.handleSort}
 					sortColumn={sortColumn}
