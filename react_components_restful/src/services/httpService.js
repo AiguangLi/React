@@ -6,8 +6,6 @@ axios.interceptors.response.use(null, error => {
 	// 未知异常
 	if (!expectedError) {
 		console.log('UnExpected Error', error);
-
-		// 错误显示
 	}
 
 	return Promise.reject(error);

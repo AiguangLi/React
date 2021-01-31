@@ -7,7 +7,9 @@ async function listAll() {
 
 		return result;
 	} catch (ex) {
-		console.log(ex);
+		console.log(ex.response, Object.keys(ex));
+
+		return ex.response;
 	}
 }
 

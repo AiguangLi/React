@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
 import postsService from '@/services/postsService';
 import Table from '@/components/common/table';
 
@@ -47,11 +49,12 @@ class PostIndex extends Component {
 
 	async componentDidMount() {
 		const { data, status, statusText } = await postsService.listAll();
-
 		if (status === 200 || status === 201) {
 			this.setState({ posts: data });
 		} else {
-			console.log('Error: ', statusText);
+			toast.error(`出错了！${status} ${statusText}`, {
+				position: toast.POSITION.TOP_CENTER,
+			});
 
 			return;
 		}
@@ -74,7 +77,22 @@ class PostIndex extends Component {
 	};
 
 	render() {
-		return <div className="container">{this.getRenderBody()}</div>;
+		return (
+			<div className="container">
+				<ToastContainer
+					position="top-center"
+					autoClose={3000}
+					hideProgressBar={false}
+					newestOnTop={false}
+					closeOnClick
+					rtl={false}
+					pauseOnFocusLoss
+					draggable
+					pauseOnHover
+				/>
+				{this.getRenderBody()}
+			</div>
+		);
 	}
 
 	getRenderBody = () => {
