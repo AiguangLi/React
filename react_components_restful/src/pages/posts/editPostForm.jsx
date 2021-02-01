@@ -26,7 +26,7 @@ class EditPostForm extends Form {
 		if (status === 200 || status === 201) {
 			this.setState({ data: this.mapToViewModel(data) });
 		} else {
-			console.log('Error: ', statusText);
+			this.handleError(status, statusText);
 
 			return;
 		}
@@ -57,7 +57,7 @@ class EditPostForm extends Form {
 		if (status === 200 || status === 201) {
 			this.props.history.goBack();
 		} else {
-			console.log('Error: ', statusText);
+			this.handleError(status, statusText);
 
 			return;
 		}

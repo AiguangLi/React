@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Joi from 'joi';
+import toast from '@/utils/toast.js';
 
 import Input from '@/components/common/input';
 import Select from '@/components/common/select';
@@ -64,6 +65,10 @@ class Form extends Component {
 		else delete errors[input.name];
 
 		this.setState({ data, errors });
+	};
+
+	handleError = (status, statusText) => {
+		toast.showError(`出错了！错误代码：${status}，错误原因：${statusText}`);
 	};
 
 	renderInput = (label, name, type = 'text') => {

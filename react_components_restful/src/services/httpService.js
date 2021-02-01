@@ -1,11 +1,12 @@
 import axios from 'axios';
+import toast from '@/utils/toast.js';
 
 axios.interceptors.response.use(null, error => {
 	const expectedError =
 		error.response && error.response.status >= 400 && error.response.status < 500;
 	// 未知异常
 	if (!expectedError) {
-		console.log('UnExpected Error', error);
+		toast.showError(`出错了！${expectedError.status} ${expectedError.statusText}`);
 	}
 
 	return Promise.reject(error);

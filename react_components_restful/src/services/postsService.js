@@ -7,8 +7,6 @@ async function listAll() {
 
 		return result;
 	} catch (ex) {
-		console.log(ex.response, Object.keys(ex));
-
 		return ex.response;
 	}
 }
@@ -20,7 +18,7 @@ async function deletePost(postId) {
 
 		return result;
 	} catch (ex) {
-		console.log(ex);
+		return ex.response;
 	}
 }
 
@@ -31,7 +29,7 @@ async function get(postId) {
 
 		return result;
 	} catch (ex) {
-		console.log(ex);
+		return ex.response;
 	}
 }
 
@@ -42,7 +40,7 @@ async function edit(postId, form) {
 
 		return result;
 	} catch (ex) {
-		console.log(ex);
+		return ex.response;
 	}
 }
 
@@ -52,7 +50,7 @@ async function add(form) {
 
 		return result;
 	} catch (ex) {
-		console.log(ex);
+		return ex.response;
 	}
 }
 

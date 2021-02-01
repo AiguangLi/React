@@ -1,5 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
 
 import NavBar from '@/components/navbar';
 import GoodsIndex from '@/pages/goods/goodsIndex';
@@ -27,6 +29,17 @@ const App = () => {
 	return (
 		<Router>
 			<div>
+				<ToastContainer
+					position="top-center"
+					autoClose={3000}
+					hideProgressBar={false}
+					newestOnTop={false}
+					closeOnClick
+					rtl={false}
+					pauseOnFocusLoss
+					draggable
+					pauseOnHover
+				/>
 				<NavBar routers={routers}></NavBar>
 				<Switch>
 					<Route path="/posts/add" render={props => <AddPostForm {...props} />}></Route>

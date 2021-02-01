@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.min.css';
+import toast from '@/utils/toast.js';
 import postsService from '@/services/postsService';
 import Table from '@/components/common/table';
 
@@ -52,11 +51,7 @@ class PostIndex extends Component {
 		if (status === 200 || status === 201) {
 			this.setState({ posts: data });
 		} else {
-			toast.error(`出错了！${status} ${statusText}`, {
-				position: toast.POSITION.TOP_CENTER,
-			});
-
-			return;
+			this.handleError(status, statusText);
 		}
 	}
 
@@ -68,7 +63,7 @@ class PostIndex extends Component {
 
 			this.setState({ posts: posts });
 		} else {
-			console.log('Error', statusText);
+			this.handleError(status, statusText);
 		}
 	};
 
@@ -76,23 +71,12 @@ class PostIndex extends Component {
 		console.log('sort');
 	};
 
+	handleError = (status, statusText) => {
+		toast.showError(`出错了！错误代码：${status}，错误原因：${statusText}`);
+	};
+
 	render() {
-		return (
-			<div className="container">
-				<ToastContainer
-					position="top-center"
-					autoClose={3000}
-					hideProgressBar={false}
-					newestOnTop={false}
-					closeOnClick
-					rtl={false}
-					pauseOnFocusLoss
-					draggable
-					pauseOnHover
-				/>
-				{this.getRenderBody()}
-			</div>
-		);
+		return <div className="container">{this.getRenderBody()}</div>;
 	}
 
 	getRenderBody = () => {
