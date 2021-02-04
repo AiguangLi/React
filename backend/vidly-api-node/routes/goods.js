@@ -21,7 +21,7 @@ router.post('/', [auth], async (req, res) => {
 	if (!category) return res.status(400).send('Invalid category.');
 
 	const goods = new Goods({
-		title: req.body.title,
+		name: req.body.name,
 		category: {
 			_id: category._id,
 			name: category.name,
