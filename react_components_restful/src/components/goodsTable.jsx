@@ -9,7 +9,7 @@ import 'font-awesome/css/font-awesome.css';
 
 class GoodsTable extends Component {
 	columns = [
-		{ field: 'id', label: '编号', sort: true },
+		{ field: '_id', label: '编号', sort: true },
 		{ field: 'name', label: '商品名称', sort: true },
 		{ field: 'category', label: '类别', sort: true },
 		{ field: 'price', label: '价格', sort: true },
@@ -18,13 +18,13 @@ class GoodsTable extends Component {
 	];
 
 	goodsFields = [
-		{ name: 'id', prefixLabel: '', suffixLabel: '', type: 'field' },
+		{ name: '_id', prefixLabel: '', suffixLabel: '', type: 'field' },
 		{
 			name: 'name',
 			prefixLabel: '',
 			suffixLabel: '',
 			type: 'operation',
-			content: goods => <Link to={'/goods/' + goods.id}>{goods['name']}</Link>,
+			content: goods => <Link to={'/goods/' + goods._id}>{goods['name']}</Link>,
 		},
 		{ name: 'category', prefixLabel: '', suffixLabel: '', type: 'field' },
 		{ name: 'price', prefixLabel: '￥', suffixLabel: '', type: 'field' },
@@ -43,13 +43,13 @@ class GoodsTable extends Component {
 			type: 'operation',
 			content: goods => (
 				<div>
-					<Link to={`/goods/edit/${goods.id}`} className="btn btn-sm btn-primary">
+					<Link to={`/goods/edit/${goods._id}`} className="btn btn-sm btn-primary">
 						编辑
 					</Link>
 					<button
 						className="ml-2 btn btn-sm btn-danger"
 						onClick={() => {
-							this.props.handleDelete(goods.id);
+							this.props.handleDelete(goods._id);
 						}}
 					>
 						删除
@@ -71,7 +71,7 @@ class GoodsTable extends Component {
 					columns={this.columns}
 					items={goods}
 					fields={this.goodsFields}
-					keyField={'id'}
+					keyField={'_id'}
 				/>
 				<Pagination
 					currentPage={currentPage}

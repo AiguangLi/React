@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Joi from 'joi';
 
 import { addGoods } from '@/services/goods';
@@ -10,7 +10,8 @@ class AddGoodsForm extends Form {
 		data: {
 			name: '',
 			price: '',
-			category: '',
+			categoryId: '',
+			liked: false,
 		},
 		errors: {},
 		categories: [],
@@ -19,21 +20,29 @@ class AddGoodsForm extends Form {
 	validationSchema = {
 		name: Joi.string().min(2).required().label('商品名称'),
 		price: Joi.number().precision(2).positive().required().label('价格'),
-		category: Joi.string().required().label('商品类别'),
+		categoryId: Joi.string().required().label('类别编号'),
+		liked: Joi.boolean().required().label('收藏'),
 	};
 
-	componentDidMount() {
-		const categories = getGoodsCategories().map(category => category.name);
+	async componentDidMount() {
+		const { data, status, statusText } = await getGoodsCategories();
 
-		this.setState({
-			categories: categories,
-		});
+		if (status === 200) {
+			this.setState({
+				categories: data,
+			});
+		} else {
+			this.handleError(status, statusText);
+		}
 	}
 
-	doSubmit = () => {
-		addGoods(this.state.data);
-
-		this.props.history.goBack();
+	doSubmit = async () => {
+		const { status, statusText } = await addGoods(this.state.data);
+		if (status === 200) {
+			this.props.history.goBack();
+		} else {
+			this.handleError(status, statusText);
+		}
 	};
 
 	render() {
@@ -43,7 +52,7 @@ class AddGoodsForm extends Form {
 				<h2>添加商品</h2>
 				{this.renderInput('名称', 'name')}
 				{/* {this.renderInput('类别', 'category')} */}
-				{this.renderSelect('类别', 'category', categories, this.state.data.category)}
+				{this.renderSelect('类别', 'categoryId', categories, this.state.data.categoryId)}
 				{this.renderInput('价格', 'price')}
 				{this.renderButton('保存')}
 			</div>

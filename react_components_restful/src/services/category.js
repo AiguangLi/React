@@ -2,13 +2,6 @@ import _ from 'lodash';
 import httpService from '@/services/httpService';
 import config from '@/config/config.json';
 
-let goodsCategories = [
-	{ id: 1, name: '日用品' },
-	{ id: 2, name: '食品' },
-	{ id: 3, name: '家具' },
-	{ id: 4, name: '家电' },
-];
-
 const apiUrl = config.goodsHost + '/categories';
 
 export async function getGoodsCategories() {

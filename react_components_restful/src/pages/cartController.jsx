@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 
-import { getGoodsByPagination, deleteGoodsById } from '@/services/goods';
+import toast from '@/utils/toast.js';
+import { getAllGoods, deleteGoods } from '@/services/goods';
 import { getGoodsCategories } from '@/services/category';
-import { listGoodsByPagination, deleteGoods } from '@/services/goodsMock';
 
 import Cart from '@/components/cart';
+import { ceil } from 'lodash';
 
 class CartController extends Component {
 	constructor() {
@@ -44,34 +45,48 @@ class CartController extends Component {
 		}
 	};
 
-	refresh = (currentPage, currentCategoryId, searchKey, sortColumn) => {
-		let paginationGoods = getGoodsByPagination(
-			currentPage,
-			this.state.pageSize,
-			currentCategoryId,
-			searchKey,
-			sortColumn
-		);
-		if (paginationGoods.goods.length === 0 && currentPage > 1) {
-			//当前页删完后，需要刷新
-			currentPage -= 1;
-			paginationGoods = getGoodsByPagination(
-				currentPage,
-				this.state.pageSize,
-				currentCategoryId,
-				searchKey,
-				sortColumn
-			);
-		}
+	refresh = async (currentPage, currentCategoryId, searchKey, sortColumn) => {
+		// let paginationGoods = getGoodsByPagination(
+		// 	currentPage,
+		// 	this.state.pageSize,
+		// 	currentCategoryId,
+		// 	searchKey,
+		// 	sortColumn
+		// );
+		// if (paginationGoods.goods.length === 0 && currentPage > 1) {
+		// 	//当前页删完后，需要刷新
+		// 	currentPage -= 1;
+		// 	paginationGoods = getGoodsByPagination(
+		// 		currentPage,
+		// 		this.state.pageSize,
+		// 		currentCategoryId,
+		// 		searchKey,
+		// 		sortColumn
+		// 	);
+		// }
 
-		this.setState({
-			currentPage: currentPage,
-			goods: paginationGoods.goods,
-			maxPage: paginationGoods.maxPage,
-			total: paginationGoods.total,
-			currentCategoryId: currentCategoryId,
-			sortColumn: sortColumn,
-			searchKey: searchKey,
+		const { data, status, statusText } = await getAllGoods();
+		if (status === 200 || status === 201) {
+			this.setState({
+				currentPage: currentPage,
+				goods: this.mapToViewModel(data),
+				maxPage: ceil(data.length / this.state.pageSize),
+				total: data.length,
+				currentCategoryId: currentCategoryId,
+				sortColumn: sortColumn,
+				searchKey: searchKey,
+			});
+		} else {
+			toast.error(statusText);
+		}
+	};
+
+	mapToViewModel = goods => {
+		return goods.map(item => {
+			const listItem = { ...item };
+			listItem.category = listItem.category.name;
+
+			return listItem;
 		});
 	};
 
@@ -100,15 +115,18 @@ class CartController extends Component {
 		this.refresh(1, this.state.currentCategoryId, keyword, this.state.sortColumn);
 	};
 
-	handleDeleteGoods = goodsId => {
-		deleteGoodsById(goodsId);
-
-		this.refresh(
-			this.state.currentPage,
-			this.state.currentCategoryId,
-			this.state.searchKey,
-			this.state.sortColumn
-		);
+	handleDeleteGoods = async goodsId => {
+		const { status, statusText } = await deleteGoods(goodsId);
+		if (status === 200 || status === 201) {
+			this.refresh(
+				this.state.currentPage,
+				this.state.currentCategoryId,
+				this.state.searchKey,
+				this.state.sortColumn
+			);
+		} else {
+			toast.error(statusText);
+		}
 	};
 
 	handleToggleLike = goods => {

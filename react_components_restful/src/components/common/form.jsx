@@ -60,6 +60,7 @@ class Form extends Component {
 	handleOnChange = ({ currentTarget: input }) => {
 		const { data, errors } = this.state;
 		data[input.name] = input.value;
+
 		const error = this.validateProperty(input);
 		if (error) errors[input.name] = error;
 		else delete errors[input.name];
@@ -84,14 +85,14 @@ class Form extends Component {
 		);
 	};
 
-	renderSelect = (label, name, items, selected) => {
+	renderSelect = (label, name, items, selectedItem) => {
 		return (
 			<Select
 				label={label}
 				items={items}
 				name={name}
-				selected={selected}
-				value={selected}
+				selectedItem={selectedItem}
+				value={selectedItem}
 				onChange={this.handleOnChange}
 			/>
 		);
