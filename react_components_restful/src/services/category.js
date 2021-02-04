@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import httpService from '@/services/httpService';
 import config from '@/config/config.json';
 
@@ -15,15 +14,11 @@ export async function getGoodsCategories() {
 }
 
 export function getCategoryById(categoryId) {
-	const category = _(goodsCategories).filter({ id: categoryId }).take(1).first();
+	try {
+		const result = await httpService.get(apiUrl + '/' + categoryId);
 
-	return category;
-
-	// try {
-	// 	const result = await httpService.get(apiUrl + '/' + categoryId);
-
-	// 	return result;
-	// } catch (ex) {
-	// 	return ex.response;
-	// }
+		return result;
+	} catch (ex) {
+		return ex.response;
+	}
 }
