@@ -33,7 +33,7 @@ ListGroup.propTypes = {
 
 //设置默认属性
 ListGroup.defaultProps = {
-	valueProperty: 'id',
+	valueProperty: '_id',
 	textProperty: 'name',
 };
 

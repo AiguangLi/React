@@ -1,7 +1,6 @@
 import paginate from '@/utils/paginate';
 import { getCategoryById } from '@/services/category';
 import _ from 'lodash';
-import { keys } from 'regenerator-runtime';
 
 let goods = [
 	{ id: 1, name: '商品1', category: '日用品', price: 3.46, liked: true },

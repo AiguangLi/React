@@ -31,15 +31,17 @@ class CartController extends Component {
 			this.state.searchKey,
 			this.state.sortColumn
 		);
-
-		listGoodsByPagination(1, 20);
-		deleteGoods(21);
 	}
 
-	setCategories = () => {
-		this.setState({
-			categories: [{ id: 0, name: '全部' }, ...getGoodsCategories()],
-		});
+	setCategories = async () => {
+		const { data, status, statusText } = await getGoodsCategories();
+		if (status === 200 || status === 201) {
+			this.setState({
+				categories: [{ _id: 0, name: '全部' }, ...data],
+			});
+		} else {
+			toast.error(statusText);
+		}
 	};
 
 	refresh = (currentPage, currentCategoryId, searchKey, sortColumn) => {
@@ -130,10 +132,13 @@ class CartController extends Component {
 	};
 
 	handleCategoryChange = category => {
-		const currentCategoryId = category.id;
+		const currentCategoryId = category._id;
 		if (this.state.currentCategory !== currentCategoryId) {
 			//分类发生改变，清空搜索框
-			this.refresh(1, currentCategoryId, '', this.state.sortColumn);
+			//this.refresh(1, currentCategoryId, '', this.state.sortColumn);
+			this.setState({
+				currentCategoryId: currentCategoryId,
+			});
 		}
 	};
 
