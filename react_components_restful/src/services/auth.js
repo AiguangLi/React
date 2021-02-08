@@ -1,6 +1,6 @@
 import jwt_decode from 'jwt-decode';
 
-import httpService from '@/services/httpService';
+import httpService, { httpMethod } from '@/services/httpService';
 import config from '@/config/config.json';
 
 const apiUrl = config.goodsHost + '/auth';
@@ -8,11 +8,11 @@ const apiUrl = config.goodsHost + '/auth';
 function register(form) {
 	const userUrl = config.goodsHost + '/users';
 
-	return httpService.request(httpService.httpMethod.POST, userUrl, form);
+	return httpService.request(httpMethod.POST, userUrl, form);
 }
 
 function login(form) {
-	return httpService.request(httpService.httpMethod.POST, apiUrl, form);
+	return httpService.request(httpMethod.POST, apiUrl, form);
 }
 
 function saveJwt(jwt) {

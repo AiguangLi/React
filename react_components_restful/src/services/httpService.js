@@ -46,7 +46,7 @@ async function request(method, url, data) {
 	return result;
 }
 
-const httpMethod = {
+export const httpMethod = {
 	POST: 'post',
 	GET: 'get',
 	DELETE: 'delete',
@@ -60,7 +60,6 @@ export default {
 	post: axios.post,
 	patch: axios.patch, //全部更新
 	delete: axios.delete,
-	httpMethod,
 	setJwt,
 	request,
 };

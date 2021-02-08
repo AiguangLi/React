@@ -1,57 +1,27 @@
-import httpService from '@/services/httpService';
+import httpService, { httpMethod } from '@/services/httpService';
 import config from '@/config/config.json';
 
-async function listAll() {
-	try {
-		const result = await httpService.get(config.postHost);
-
-		return result;
-	} catch (ex) {
-		return ex.response;
-	}
+function listAll() {
+	return httpService.request(httpMethod.GET, config.postHost);
 }
 
-async function deletePost(postId) {
-	try {
-		const restUrl = `${config.postHost}/${postId}`;
-		const result = await httpService.delete(restUrl);
-
-		return result;
-	} catch (ex) {
-		return ex.response;
-	}
+function deletePost(postId) {
+	const restUrl = `${config.postHost}/${postId}`;
+	return httpService.request(httpMethod.DELETE, restUrl);
 }
 
-async function get(postId) {
-	try {
-		const restUrl = `${config.postHost}/${postId}`;
-		const result = await httpService.get(restUrl);
-
-		return result;
-	} catch (ex) {
-		return ex.response;
-	}
+function get(postId) {
+	const restUrl = `${config.postHost}/${postId}`;
+	return httpService.request(httpMethod.GET, restUrl);
 }
 
-async function edit(postId, form) {
-	try {
-		const restUrl = `${config.postHost}/${postId}`;
-		const result = await httpService.put(restUrl, form);
-
-		return result;
-	} catch (ex) {
-		return ex.response;
-	}
+function edit(postId, form) {
+	const restUrl = `${config.postHost}/${postId}`;
+	return httpService.request(httpMethod.PUT, restUrl, form);
 }
 
-async function add(form) {
-	try {
-		const result = await httpService.post(config.postHost, form);
-
-		return result;
-	} catch (ex) {
-		return ex.response;
-	}
+function add(form) {
+	return httpService.request(httpMethod.POST, config.postHost, form);
 }
 
 export default {
