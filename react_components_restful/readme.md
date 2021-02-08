@@ -19,3 +19,7 @@ sentry 自有平台在国内访问较慢！
 ```shell
 cnpm i --S @sentry/react @sentry/tracing
 ```
+
+## axios 网络请求库
+
+[中文网址](http://www.axios-js.com)

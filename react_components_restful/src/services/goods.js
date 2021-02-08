@@ -3,52 +3,22 @@ import config from '@/config/config.json';
 
 const apiUrl = config.goodsHost + '/goods';
 
-export async function getAllGoods() {
-	try {
-		const result = await httpService.get(apiUrl);
-
-		return result;
-	} catch (ex) {
-		return ex.response;
-	}
+export function getAllGoods() {
+	return httpService.request(httpService.httpMethod.GET, apiUrl);
 }
 
 export async function getGoods(goodsId) {
-	try {
-		const result = await httpService.get(apiUrl + '/' + goodsId);
-
-		return result;
-	} catch (ex) {
-		return ex.response;
-	}
+	return httpService.request(httpService.httpMethod.GET, apiUrl + '/' + goodsId);
 }
 
 export async function deleteGoods(goodsId) {
-	try {
-		const result = await httpService.delete(apiUrl + '/' + goodsId);
-
-		return result;
-	} catch (ex) {
-		return ex.response;
-	}
+	return httpService.request(httpService.httpMethod.DELETE, apiUrl + '/' + goodsId);
 }
 
 export async function addGoods(form) {
-	try {
-		const result = await httpService.post(apiUrl, form);
-
-		return result;
-	} catch (ex) {
-		return ex.response;
-	}
+	return httpService.request(httpService.httpMethod.POST, apiUrl, form);
 }
 
 export async function editGoods(goodsId, form) {
-	try {
-		const result = await httpService.put(apiUrl + '/' + goodsId, form);
-
-		return result;
-	} catch (ex) {
-		return ex.response;
-	}
+	return httpService.request(httpService.httpMethod.PUT, apiUrl + '/' + goodsId, form);
 }

@@ -64,9 +64,7 @@ const App = () => {
 					<Route path="/login">
 						<LoginForm />
 					</Route>
-					<Route path="/register">
-						<RegisterForm />
-					</Route>
+					<Route path="/register" render={props => <RegisterForm {...props} />}></Route>
 					<Route path="/orders" render={props => <OrderController {...props} />}></Route>
 					<Route path="/not-found">
 						<NotFound />

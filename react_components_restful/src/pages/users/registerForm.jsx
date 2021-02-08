@@ -1,33 +1,42 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Joi from 'joi';
 
 import Form from '@/components/common/form';
+import authService from '@/services/auth';
 
 class RegisterForm extends Form {
 	state = {
-		data: { username: '', password: '', nickname: '' },
+		data: { email: '', password: '', name: '' },
 		errors: {},
 	};
 
 	// Joi 的新版本的tlds默认是true，即指定的域名后缀，可以这是为false，则不校验域名后缀
 	validationSchema = {
-		username: Joi.string()
+		email: Joi.string()
 			.email({ minDomainSegments: 2, tlds: { allow: false } })
 			.required()
 			.label('邮箱'),
 		password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{6,30}$')).required(),
-		nickname: Joi.string().min(2).required(),
+		name: Joi.string().min(2).required(),
 	};
 
-	doSubmit = () => {};
+	doSubmit = async () => {
+		const { data, headers, status } = await authService.register(this.state.data);
+		if (status === 200 || status === 201) {
+			authService.saveJwt(headers['x-auth-token']);
+			this.props.history.goBack();
+		} else {
+			this.handleError(status, data);
+		}
+	};
 
 	render() {
 		return (
 			<div className="container">
 				<h2>注册新用户</h2>
-				{this.renderInput('邮箱', 'username')}
+				{this.renderInput('邮箱', 'email')}
 				{this.renderInput('密码', 'password', 'password')}
-				{this.renderInput('昵称', 'nickname')}
+				{this.renderInput('称呼', 'name')}
 				{this.renderButton('注册')}
 			</div>
 		);
