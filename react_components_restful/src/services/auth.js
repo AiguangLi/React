@@ -20,6 +20,10 @@ function saveJwt(jwt) {
 	httpService.setJwt(jwt);
 }
 
+function logout() {
+	localStorage.removeItem('jwt');
+}
+
 function getCurrentUser() {
 	const jwt = localStorage.getItem('jwt');
 	if (!jwt) {
@@ -37,6 +41,7 @@ function getCurrentUser() {
 export default {
 	register,
 	login,
+	logout,
 	saveJwt,
 	getCurrentUser,
 };

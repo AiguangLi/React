@@ -12,6 +12,7 @@ import CartController from '@/pages/cartController';
 import OrderController from '@/pages/orderController';
 import UserIndex from '@/pages/users/userIndex';
 import LoginForm from '@/pages/users/loginForm';
+import Logout from '@/pages/users/logout';
 import RegisterForm from '@/pages/users/registerForm';
 import NotFound from '@/pages/notFound';
 import AddGoodsForm from '@/pages/goods/addGoodsForm';
@@ -22,6 +23,7 @@ import AddPostForm from '@/pages/posts/addPostForm';
 
 const App = () => {
 	const routers = getRouters();
+	const userLogon = isUserLogon();
 	return (
 		<Router>
 			<div>
@@ -53,12 +55,25 @@ const App = () => {
 					<Route path="/goods">
 						<GoodsIndex />
 					</Route>
+					{userLogon ? (
+						<Route path="/logout">
+							<Logout />
+						</Route>
+					) : null}
 					<Route path="/cart">
 						<CartController />
 					</Route>
 					<Route path="/users" render={props => <UserIndex {...props} />}></Route>
-					<Route path="/login" render={props => <LoginForm {...props} />}></Route>
-					<Route path="/register" render={props => <RegisterForm {...props} />}></Route>
+					{!userLogon ? (
+						<Route path="/login" render={props => <LoginForm {...props} />}></Route>
+					) : null}
+					{!userLogon ? (
+						<Route
+							path="/register"
+							render={props => <RegisterForm {...props} />}
+						></Route>
+					) : null}
+
 					<Route path="/orders" render={props => <OrderController {...props} />}></Route>
 					<Route path="/not-found">
 						<NotFound />
@@ -71,8 +86,12 @@ const App = () => {
 	);
 };
 
-const getRouters = () => {
+const isUserLogon = () => {
 	const currentUser = authService.getCurrentUser();
+	return currentUser ? true : false;
+};
+
+const getRouters = () => {
 	const routers = [
 		{ path: '/goods', name: '商品' },
 		{ path: '/cart', name: '购物车' },
@@ -80,7 +99,7 @@ const getRouters = () => {
 		{ path: '/posts', name: '文章' },
 		{ path: '/users', name: '个人中心' },
 	];
-	if (currentUser) {
+	if (isUserLogon()) {
 		routers.push({ path: '/logout', name: '退出登录' });
 	} else {
 		routers.push({ path: '/login', name: '登录' }, { path: '/register', name: '注册' });
