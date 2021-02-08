@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-d
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 
+import authService from '@/services/auth';
+
 import NavBar from '@/components/navbar';
 import GoodsIndex from '@/pages/goods/goodsIndex';
 import GoodsDetail from '@/pages/goods/goodsDetail';
@@ -19,13 +21,7 @@ import EditPostForm from '@/pages/posts/editPostForm';
 import AddPostForm from '@/pages/posts/addPostForm';
 
 const App = () => {
-	const routers = [
-		{ path: '/goods', name: '商品' },
-		{ path: '/cart', name: '购物车' },
-		{ path: '/orders', name: '订单' },
-		{ path: '/posts', name: '文章' },
-		{ path: '/users', name: '个人中心' },
-	];
+	const routers = getRouters();
 	return (
 		<Router>
 			<div>
@@ -61,9 +57,7 @@ const App = () => {
 						<CartController />
 					</Route>
 					<Route path="/users" render={props => <UserIndex {...props} />}></Route>
-					<Route path="/login">
-						<LoginForm />
-					</Route>
+					<Route path="/login" render={props => <LoginForm {...props} />}></Route>
 					<Route path="/register" render={props => <RegisterForm {...props} />}></Route>
 					<Route path="/orders" render={props => <OrderController {...props} />}></Route>
 					<Route path="/not-found">
@@ -75,6 +69,24 @@ const App = () => {
 			</div>
 		</Router>
 	);
+};
+
+const getRouters = () => {
+	const currentUser = authService.getCurrentUser();
+	const routers = [
+		{ path: '/goods', name: '商品' },
+		{ path: '/cart', name: '购物车' },
+		{ path: '/orders', name: '订单' },
+		{ path: '/posts', name: '文章' },
+		{ path: '/users', name: '个人中心' },
+	];
+	if (currentUser) {
+		routers.push({ path: '/logout', name: '退出登录' });
+	} else {
+		routers.push({ path: '/login', name: '登录' }, { path: '/register', name: '注册' });
+	}
+
+	return routers;
 };
 
 export default App;

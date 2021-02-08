@@ -21,12 +21,13 @@ class RegisterForm extends Form {
 	};
 
 	doSubmit = async () => {
-		const { data, headers, status } = await authService.register(this.state.data);
+		const { data, statusText, status } = await authService.login(this.state.data);
 		if (status === 200 || status === 201) {
-			authService.saveJwt(headers['x-auth-token']);
-			this.props.history.goBack();
+			console.log(data);
+			authService.saveJwt(data);
+			window.location = '/';
 		} else {
-			this.handleError(status, data);
+			this.handleError(status, statusText);
 		}
 	};
 

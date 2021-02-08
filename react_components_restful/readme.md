@@ -23,3 +23,9 @@ cnpm i --S @sentry/react @sentry/tracing
 ## axios 网络请求库
 
 [中文网址](http://www.axios-js.com)
+
+## JWT 解密库
+
+[npm 网址](https://www.npmjs.com/package/jwt-decode)
+
+调用 jwt_decode(jwt)可以解密 jwt 的 payload 信息。
