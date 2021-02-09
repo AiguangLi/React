@@ -35,9 +35,11 @@ export default class Cart extends Component {
 				<div className="col">
 					<p className="m-8">
 						共有{total}件商品
-						<Link to="/goods/add" className="ml-2 btn btn-sm btn-primary">
-							添加商品
-						</Link>
+						{this.props.user ? (
+							<Link to="/goods/add" className="ml-2 btn btn-sm btn-primary">
+								添加商品
+							</Link>
+						) : null}
 					</p>
 					<Search
 						name="name"
@@ -54,6 +56,7 @@ export default class Cart extends Component {
 						maxPage={maxPage}
 						onSort={onSort}
 						sortColumn={sortColumn}
+						user={this.props.user}
 					></GoodsTable>
 				</div>
 			</div>

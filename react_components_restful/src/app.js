@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
@@ -21,91 +21,120 @@ import PostIndex from '@/pages/posts/postIndex';
 import EditPostForm from '@/pages/posts/editPostForm';
 import AddPostForm from '@/pages/posts/addPostForm';
 
-const App = () => {
-	const routers = getRouters();
-	const userLogon = isUserLogon();
-	return (
-		<Router>
-			<div>
-				<ToastContainer
-					position="top-center"
-					autoClose={3000}
-					hideProgressBar={false}
-					newestOnTop={false}
-					closeOnClick
-					rtl={false}
-					pauseOnFocusLoss
-					draggable
-					pauseOnHover
-				/>
-				<NavBar routers={routers}></NavBar>
-				<Switch>
-					<Route path="/posts/add" render={props => <AddPostForm {...props} />}></Route>
-					<Route
-						path={'/posts/edit/:id'}
-						render={props => <EditPostForm {...props} />}
-					></Route>
-					<Route path="/posts" render={props => <PostIndex {...props} />}></Route>
-					<Route
-						path="/goods/edit/:id"
-						render={props => <EditGoodsForm {...props} />}
-					></Route>
-					<Route path="/goods/add" render={props => <AddGoodsForm {...props} />}></Route>
-					<Route path="/goods/:id" render={props => <GoodsDetail {...props} />}></Route>
-					<Route path="/goods">
-						<GoodsIndex />
-					</Route>
-					{userLogon ? (
-						<Route path="/logout">
-							<Logout />
-						</Route>
-					) : null}
-					<Route path="/cart">
-						<CartController />
-					</Route>
-					<Route path="/users" render={props => <UserIndex {...props} />}></Route>
-					{!userLogon ? (
-						<Route path="/login" render={props => <LoginForm {...props} />}></Route>
-					) : null}
-					{!userLogon ? (
-						<Route
-							path="/register"
-							render={props => <RegisterForm {...props} />}
-						></Route>
-					) : null}
+class App extends Component {
+	state = { user: null };
 
-					<Route path="/orders" render={props => <OrderController {...props} />}></Route>
-					<Route path="/not-found">
-						<NotFound />
-					</Route>
-					<Redirect from="/" to="/cart" />
-					<Redirect to="/not-found" />
-				</Switch>
-			</div>
-		</Router>
-	);
-};
-
-const isUserLogon = () => {
-	const currentUser = authService.getCurrentUser();
-	return currentUser ? true : false;
-};
-
-const getRouters = () => {
-	const routers = [
-		{ path: '/goods', name: '商品' },
-		{ path: '/cart', name: '购物车' },
-		{ path: '/orders', name: '订单' },
-		{ path: '/posts', name: '文章' },
-		{ path: '/users', name: '个人中心' },
-	];
-	if (isUserLogon()) {
-		routers.push({ path: '/logout', name: '退出登录' });
-	} else {
-		routers.push({ path: '/login', name: '登录' }, { path: '/register', name: '注册' });
+	componentDidMount() {
+		const user = authService.getCurrentUser();
+		this.setState({ user });
 	}
 
-	return routers;
-};
+	render() {
+		const routers = this.getRouters();
+		const userLogon = this.state.user ? true : false;
+		return (
+			<Router>
+				<div>
+					<ToastContainer
+						position="top-center"
+						autoClose={3000}
+						hideProgressBar={false}
+						newestOnTop={false}
+						closeOnClick
+						rtl={false}
+						pauseOnFocusLoss
+						draggable
+						pauseOnHover
+					/>
+					<NavBar routers={routers}></NavBar>
+					<Switch>
+						<Route
+							path="/posts/add"
+							render={props => <AddPostForm {...props} />}
+						></Route>
+						<Route
+							path={'/posts/edit/:id'}
+							render={props => <EditPostForm {...props} />}
+						></Route>
+						<Route path="/posts" render={props => <PostIndex {...props} />}></Route>
+						<Route
+							path="/goods/edit/:id"
+							render={props => {
+								return userLogon ? (
+									<EditGoodsForm {...props} />
+								) : (
+									<Redirect from="/goods/edit" to="/login" />
+								);
+							}}
+						></Route>
+						<Route
+							path="/goods/add"
+							render={props => {
+								return userLogon ? (
+									<AddGoodsForm {...props} />
+								) : (
+									<Redirect from="/goods/add" to="/login" />
+								);
+							}}
+						></Route>
+						<Route
+							path="/goods/:id"
+							render={props => <GoodsDetail {...props} />}
+						></Route>
+						<Route path="/goods">
+							<GoodsIndex />
+						</Route>
+						{userLogon ? (
+							<Route path="/logout">
+								<Logout />
+							</Route>
+						) : null}
+						<Route
+							path="/cart"
+							render={props => <CartController {...props} user={this.state.user} />}
+						></Route>
+						<Route path="/users" render={props => <UserIndex {...props} />}></Route>
+						{!userLogon ? (
+							<Route path="/login" render={props => <LoginForm {...props} />}></Route>
+						) : null}
+						{!userLogon ? (
+							<Route
+								path="/register"
+								render={props => <RegisterForm {...props} />}
+							></Route>
+						) : null}
+
+						<Route
+							path="/orders"
+							render={props => <OrderController {...props} />}
+						></Route>
+						<Route path="/not-found">
+							<NotFound />
+						</Route>
+						<Redirect from="/" to="/cart" />
+						<Redirect to="/not-found" />
+					</Switch>
+				</div>
+			</Router>
+		);
+	}
+
+	getRouters = () => {
+		const routers = [
+			{ path: '/goods', name: '商品' },
+			{ path: '/cart', name: '购物车' },
+			{ path: '/orders', name: '订单' },
+			{ path: '/posts', name: '文章' },
+			{ path: '/users', name: '个人中心' },
+		];
+		if (this.state.user) {
+			routers.push({ path: '/logout', name: '退出登录' });
+		} else {
+			routers.push({ path: '/login', name: '登录' }, { path: '/register', name: '注册' });
+		}
+
+		return routers;
+	};
+}
 
 export default App;

@@ -8,56 +8,76 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'font-awesome/css/font-awesome.css';
 
 class GoodsTable extends Component {
-	columns = [
-		{ field: '_id', label: '编号', sort: true },
-		{ field: 'name', label: '商品名称', sort: true },
-		{ field: 'category', label: '类别', sort: true },
-		{ field: 'price', label: '价格', sort: true },
-		{ field: 'like', label: '收藏', sort: false },
-		{ field: 'operation', label: '操作', sort: false },
-	];
+	getColumns = () => {
+		const columns = [
+			{ field: '_id', label: '编号', sort: true },
+			{ field: 'name', label: '商品名称', sort: true },
+			{ field: 'category', label: '类别', sort: true },
+			{ field: 'price', label: '价格', sort: true },
+		];
 
-	goodsFields = [
-		{ name: '_id', prefixLabel: '', suffixLabel: '', type: 'field' },
-		{
-			name: 'name',
-			prefixLabel: '',
-			suffixLabel: '',
-			type: 'operation',
-			content: goods => <Link to={'/goods/' + goods._id}>{goods['name']}</Link>,
-		},
-		{ name: 'category', prefixLabel: '', suffixLabel: '', type: 'field' },
-		{ name: 'price', prefixLabel: '￥', suffixLabel: '', type: 'field' },
-		{
-			name: 'like',
-			type: 'operation',
-			content: goods => (
-				<Like
-					liked={goods.liked}
-					onToggleLike={() => this.props.onToggleLike(goods)}
-				></Like>
-			),
-		},
-		{
-			name: 'delete',
-			type: 'operation',
-			content: goods => (
-				<div>
-					<Link to={`/goods/edit/${goods._id}`} className="btn btn-sm btn-primary">
-						编辑
-					</Link>
-					<button
-						className="ml-2 btn btn-sm btn-danger"
-						onClick={() => {
-							this.props.handleDelete(goods._id);
-						}}
-					>
-						删除
-					</button>
-				</div>
-			),
-		},
-	];
+		if (this.props.user) {
+			columns.push(
+				{ field: 'like', label: '收藏', sort: false },
+				{ field: 'operation', label: '操作', sort: false }
+			);
+		}
+
+		return columns;
+	};
+
+	getFields = () => {
+		const goodsFields = [
+			{ name: '_id', prefixLabel: '', suffixLabel: '', type: 'field' },
+			{
+				name: 'name',
+				prefixLabel: '',
+				suffixLabel: '',
+				type: 'operation',
+				content: goods => <Link to={'/goods/' + goods._id}>{goods['name']}</Link>,
+			},
+			{ name: 'category', prefixLabel: '', suffixLabel: '', type: 'field' },
+			{ name: 'price', prefixLabel: '￥', suffixLabel: '', type: 'field' },
+		];
+		if (this.props.user) {
+			goodsFields.push(
+				{
+					name: 'like',
+					type: 'operation',
+					content: goods => (
+						<Like
+							liked={goods.liked}
+							onToggleLike={() => this.props.onToggleLike(goods)}
+						></Like>
+					),
+				},
+				{
+					name: 'delete',
+					type: 'operation',
+					content: goods => (
+						<div>
+							<Link
+								to={`/goods/edit/${goods._id}`}
+								className="btn btn-sm btn-primary"
+							>
+								编辑
+							</Link>
+							<button
+								className="ml-2 btn btn-sm btn-danger"
+								onClick={() => {
+									this.props.handleDelete(goods._id);
+								}}
+							>
+								删除
+							</button>
+						</div>
+					),
+				}
+			);
+		}
+
+		return goodsFields;
+	};
 
 	render() {
 		const { goods, onPageChanged, currentPage, maxPage, onSort, sortColumn } = this.props;
@@ -68,9 +88,9 @@ class GoodsTable extends Component {
 				<Table
 					onSort={onSort}
 					sortColumn={sortColumn}
-					columns={this.columns}
+					columns={this.getColumns()}
 					items={goods}
-					fields={this.goodsFields}
+					fields={this.getFields()}
 					keyField={'_id'}
 				/>
 				<Pagination

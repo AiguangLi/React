@@ -41,7 +41,7 @@ class CartController extends Component {
 				categories: [{ _id: 0, name: '全部' }, ...data],
 			});
 		} else {
-			toast.error(statusText);
+			toast.showError(statusText);
 		}
 	};
 
@@ -77,7 +77,7 @@ class CartController extends Component {
 				searchKey: searchKey,
 			});
 		} else {
-			toast.error(statusText);
+			toast.showError(statusText);
 		}
 	};
 
@@ -107,6 +107,7 @@ class CartController extends Component {
 				sortColumn={this.state.sortColumn}
 				searchKey={this.state.searchKey}
 				onSearchChanged={this.handleSearchChanged}
+				user={this.props.user}
 			></Cart>
 		);
 	}
@@ -125,7 +126,7 @@ class CartController extends Component {
 				this.state.sortColumn
 			);
 		} else {
-			toast.error(statusText);
+			toast.showError(statusText);
 		}
 	};
 
