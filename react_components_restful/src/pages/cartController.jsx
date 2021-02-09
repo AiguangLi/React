@@ -46,25 +46,6 @@ class CartController extends Component {
 	};
 
 	refresh = async (currentPage, currentCategoryId, searchKey, sortColumn) => {
-		// let paginationGoods = getGoodsByPagination(
-		// 	currentPage,
-		// 	this.state.pageSize,
-		// 	currentCategoryId,
-		// 	searchKey,
-		// 	sortColumn
-		// );
-		// if (paginationGoods.goods.length === 0 && currentPage > 1) {
-		// 	//当前页删完后，需要刷新
-		// 	currentPage -= 1;
-		// 	paginationGoods = getGoodsByPagination(
-		// 		currentPage,
-		// 		this.state.pageSize,
-		// 		currentCategoryId,
-		// 		searchKey,
-		// 		sortColumn
-		// 	);
-		// }
-
 		const { data, status, statusText } = await getAllGoods();
 		if (status === 200 || status === 201) {
 			this.setState({
