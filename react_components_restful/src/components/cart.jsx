@@ -56,7 +56,6 @@ export default class Cart extends Component {
 						maxPage={maxPage}
 						onSort={onSort}
 						sortColumn={sortColumn}
-						user={this.props.user}
 					></GoodsTable>
 				</div>
 			</div>
