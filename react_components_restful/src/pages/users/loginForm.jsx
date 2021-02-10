@@ -1,4 +1,5 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 import Joi from 'joi';
 
 import authService from '@/services/auth';
@@ -21,17 +22,21 @@ class LoginForm extends Form {
 	};
 
 	doSubmit = async () => {
-		const { data, headers, status } = await authService.login(this.state.data);
+		const { data, status } = await authService.login(this.state.data);
 		if (status === 200 || status === 201) {
 			authService.saveJwt(data);
-			window.location = '/';
+
+			const { state } = this.props.location;
+			window.location = state ? state.from.pathname : '/';
 		} else {
 			this.handleError(status, data);
 		}
 	};
 
 	render() {
-		return (
+		return authService.getCurrentUser() ? (
+			<Redirect to="/" />
+		) : (
 			<div className="container">
 				<h2>登录</h2>
 				<form className="needs-validation" onSubmit={this.handleSubmit}>

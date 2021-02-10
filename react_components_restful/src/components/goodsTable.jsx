@@ -4,6 +4,8 @@ import Like from '@/components/common/like';
 import Pagination from '@/components/common/pagination';
 import Table from '@/components/common/table';
 
+import authService from '@/services/auth';
+
 import 'bootstrap/dist/css/bootstrap.css';
 import 'font-awesome/css/font-awesome.css';
 
@@ -16,7 +18,7 @@ class GoodsTable extends Component {
 			{ field: 'price', label: '价格', sort: true },
 		];
 
-		if (this.props.user) {
+		if (authService.getCurrentUser()) {
 			columns.push(
 				{ field: 'like', label: '收藏', sort: false },
 				{ field: 'operation', label: '操作', sort: false }
@@ -39,7 +41,7 @@ class GoodsTable extends Component {
 			{ name: 'category', prefixLabel: '', suffixLabel: '', type: 'field' },
 			{ name: 'price', prefixLabel: '￥', suffixLabel: '', type: 'field' },
 		];
-		if (this.props.user) {
+		if (authService.getCurrentUser()) {
 			goodsFields.push(
 				{
 					name: 'like',

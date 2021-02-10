@@ -1,4 +1,6 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
+
 import Joi from 'joi';
 
 import Form from '@/components/common/form';
@@ -32,7 +34,9 @@ class RegisterForm extends Form {
 	};
 
 	render() {
-		return (
+		return authService.getCurrentUser() ? (
+			<Redirect to="/" />
+		) : (
 			<div className="container">
 				<h2>注册新用户</h2>
 				{this.renderInput('邮箱', 'email')}

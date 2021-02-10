@@ -20,6 +20,7 @@ import EditGoodsForm from '@/pages/goods/editGoodsForm';
 import PostIndex from '@/pages/posts/postIndex';
 import EditPostForm from '@/pages/posts/editPostForm';
 import AddPostForm from '@/pages/posts/addPostForm';
+import ProtectRoute from '@/components/common/protectRoute';
 
 class App extends Component {
 	state = { user: null };
@@ -31,7 +32,6 @@ class App extends Component {
 
 	render() {
 		const routers = this.getRouters();
-		const userLogon = this.state.user ? true : false;
 		return (
 			<Router>
 				<div>
@@ -57,26 +57,14 @@ class App extends Component {
 							render={props => <EditPostForm {...props} />}
 						></Route>
 						<Route path="/posts" render={props => <PostIndex {...props} />}></Route>
-						<Route
+						<ProtectRoute
 							path="/goods/edit/:id"
-							render={props => {
-								return userLogon ? (
-									<EditGoodsForm {...props} />
-								) : (
-									<Redirect from="/goods/edit" to="/login" />
-								);
-							}}
-						></Route>
-						<Route
+							render={props => <EditGoodsForm {...props} />}
+						></ProtectRoute>
+						<ProtectRoute
 							path="/goods/add"
-							render={props => {
-								return userLogon ? (
-									<AddGoodsForm {...props} />
-								) : (
-									<Redirect from="/goods/add" to="/login" />
-								);
-							}}
-						></Route>
+							render={props => <AddGoodsForm {...props} />}
+						></ProtectRoute>
 						<Route
 							path="/goods/:id"
 							render={props => <GoodsDetail {...props} />}
@@ -84,26 +72,16 @@ class App extends Component {
 						<Route path="/goods">
 							<GoodsIndex />
 						</Route>
-						{userLogon ? (
-							<Route path="/logout">
-								<Logout />
-							</Route>
-						) : null}
-						<Route
-							path="/cart"
-							render={props => <CartController {...props} user={this.state.user} />}
-						></Route>
+						<Route path="/logout">
+							<Logout />
+						</Route>
+						<Route path="/cart" render={props => <CartController {...props} />}></Route>
 						<Route path="/users" render={props => <UserIndex {...props} />}></Route>
-						{!userLogon ? (
-							<Route path="/login" render={props => <LoginForm {...props} />}></Route>
-						) : null}
-						{!userLogon ? (
-							<Route
-								path="/register"
-								render={props => <RegisterForm {...props} />}
-							></Route>
-						) : null}
-
+						<Route path="/login" render={props => <LoginForm {...props} />}></Route>
+						<Route
+							path="/register"
+							render={props => <RegisterForm {...props} />}
+						></Route>
 						<Route
 							path="/orders"
 							render={props => <OrderController {...props} />}

@@ -29,3 +29,27 @@ cnpm i --S @sentry/react @sentry/tracing
 [npm 网址](https://www.npmjs.com/package/jwt-decode)
 
 调用 jwt_decode(jwt)可以解密 jwt 的 payload 信息。
+
+## ProtectRoute：受保护的路由
+
+[相关文档](https://reactrouter.com/web/api/Redirect/to-object)
+受保护的路由在没有登录的时候跳转到登录页面，这是在 Redirect 可以将 to 属性设置为对象。
+
+```jsx
+<Redirect
+	to={{
+		pathname: '/login',
+		state: { from: props.location },
+	}}
+/>
+```
+
+从而可以在登录组件成功后可以使用 state 属性的 from 属性返回登录之前的页面。
+
+```js
+if (status === 200 || status === 201) {
+	authService.saveJwt(data);
+	const { state } = this.props.location;
+	window.location = state ? state.from.pathname : '/';
+}
+```
