@@ -1,0 +1,56 @@
+{
+  "name": "react-router",
+  "version": "1.0.0",
+  "description": "React Study Demo",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "webpack --watch",
+    "build": "webpack --open",
+    "dev": "webpack-dev-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://AiguangLi@github.com/AiguangLi/React.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AiguangLi/React/issues"
+  },
+  "homepage": "https://github.com/AiguangLi/React#readme",
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "css-loader": "^5.0.1",
+    "html-webpack-plugin": "^4.1.0",
+    "node-sass": "^5.0.0",
+    "sass-loader": "^10.1.0",
+    "style-loader": "^2.0.0",
+    "url-loader": "^4.1.1",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.11.0"
+  },
+  "dependencies": {
+    "@sentry/react": "^6.0.3",
+    "@sentry/tracing": "^6.0.3",
+    "axios": "^0.21.1",
+    "bootstrap": "^4.5.0",
+    "font-awesome": "^4.7.0",
+    "joi": "^17.3.0",
+    "jwt-decode": "^3.1.2",
+    "lodash": "^4.17.20",
+    "prop-types": "^15.7.2",
+    "query-string": "^6.13.8",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-router-dom": "^5.2.0",
+    "react-toastify": "^7.0.2"
+  }
+}

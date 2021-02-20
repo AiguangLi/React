@@ -1,0 +1,4 @@
+{
+    "goodsHost": "http://localhost:3900/api",
+    "postHost": "http://jsonplaceholder.typicode.com/posts"
+}
