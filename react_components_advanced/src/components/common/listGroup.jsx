@@ -40,4 +40,5 @@ ListGroup.defaultProps = {
 	textProperty: 'name',
 };
 
+// 仅为演示高阶组件
 export default withTooltip(ListGroup);
